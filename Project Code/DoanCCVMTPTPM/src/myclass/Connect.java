@@ -1,5 +1,5 @@
 
-package doanccvmtptpm;
+package myclass;
 import java.sql.*;
 import javax.swing.JOptionPane;
 public class Connect {
