@@ -11,15 +11,6 @@ public class Connect {
             String url = "jdbc:sqlserver://localhost:1433;databaseName=QLNH;";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             conn=java.sql.DriverManager.getConnection(url,userName,passworld);
-            ResultSet res = LoadData("Select * From MatHang");
-            while(res.next())
-            {
-                System.out.println(res.getString(1));
-                System.out.println(res.getString(2));
-                System.out.println(res.getString(3));
-                System.out.println(res.getString(4));
-            }
-            
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null,"Kết nối CSDL thất bại:  " + ex.getMessage() ,"Thông Báo",1);
         }    
