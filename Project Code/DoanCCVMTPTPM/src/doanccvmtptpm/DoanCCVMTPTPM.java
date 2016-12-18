@@ -5,6 +5,10 @@
  */
 package doanccvmtptpm;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Hunter95
@@ -15,7 +19,12 @@ public class DoanCCVMTPTPM {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Connect c = new Connect();
+        try {
+            c.connectSQL();
+        } catch (SQLException ex) {
+            Logger.getLogger(DoanCCVMTPTPM.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
