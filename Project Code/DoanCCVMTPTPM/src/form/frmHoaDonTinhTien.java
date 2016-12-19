@@ -5,17 +5,36 @@
  */
 package form;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.ListModel;
+import myclass.Ban;
+import myclass.MatHang;
+import myclass.Product;
+
 /**
  *
  * @author Hunter95
  */
 public class frmHoaDonTinhTien extends javax.swing.JFrame {
-
+    Ban ban = new Ban();
+    MatHang mathang = new MatHang();
+    DefaultListModel listTableModel = new DefaultListModel();
+    DefaultComboBoxModel<String> comboTableModel = new DefaultComboBoxModel<>();
+    DefaultListModel listProductModel = new DefaultListModel();
+    DefaultComboBoxModel<Product> comboProductModel = new DefaultComboBoxModel<Product>();
     /**
      * Creates new form frmHoaDonTinhTien
      */
     public frmHoaDonTinhTien() {
         initComponents();
+        loadData();
     }
 
     /**
@@ -483,4 +502,26 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
     private javax.swing.JTextField jtxtTotalPrice;
     private javax.swing.JList<String> listTable;
     // End of variables declaration//GEN-END:variables
+
+    private void loadData() {
+        try {
+            listTableModel.clear();
+            comboTableModel.removeAllElements();
+            ResultSet res = ban.LoadAllBanData();
+            while(res.next())
+            {
+                listTableModel.addElement(res.getString(1));
+                comboTableModel.addElement(res.getString(1));
+            }
+            comboTable.setModel(comboTableModel);
+            listTable.setModel(listTableModel);
+            
+        } catch (SQLException ex) {
+            showMessage("Có lỗi"+ex.getMessage());
+        }
+    }
+
+    private void showMessage(String msg) {
+            JOptionPane.showMessageDialog(null,msg);  
+    }
 }
