@@ -28,7 +28,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
     DefaultListModel listTableModel = new DefaultListModel();
     DefaultComboBoxModel<String> comboTableModel = new DefaultComboBoxModel<>();
     DefaultListModel listProductModel = new DefaultListModel();
-    DefaultComboBoxModel<Product> comboProductModel = new DefaultComboBoxModel<Product>();
+    DefaultComboBoxModel<Product> comboProductModel = new DefaultComboBoxModel<>();
     /**
      * Creates new form frmHoaDonTinhTien
      */
@@ -87,7 +87,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
         jTxtPayment = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jListProduct = new javax.swing.JList<>();
         jbtThoat = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -364,7 +364,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Món"));
 
-        jScrollPane3.setViewportView(jList1);
+        jScrollPane3.setViewportView(jListProduct);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -476,7 +476,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jListProduct;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -505,6 +505,18 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
 
     private void loadData() {
         try {
+            LoadTableData();
+            LoadProductData();
+        } catch (SQLException ex) {
+            showMessage("Có lỗi"+ex.getMessage());
+        }
+    }
+
+    private void showMessage(String msg) {
+            JOptionPane.showMessageDialog(null,msg);  
+    }
+
+    private void LoadTableData() throws SQLException {
             listTableModel.clear();
             comboTableModel.removeAllElements();
             ResultSet res = ban.LoadAllBanData();
@@ -515,13 +527,20 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
             }
             comboTable.setModel(comboTableModel);
             listTable.setModel(listTableModel);
-            
-        } catch (SQLException ex) {
-            showMessage("Có lỗi"+ex.getMessage());
-        }
     }
 
-    private void showMessage(String msg) {
-            JOptionPane.showMessageDialog(null,msg);  
+    private void LoadProductData() throws SQLException {
+            listProductModel.clear();
+            comboProductModel.removeAllElements();
+             ResultSet res = mathang.LoadAllMatHangData();
+            while(res.next())
+            {
+                Product item = new Product(res.getString(1), res.getNString(2), res.getNString(4), res.getDouble(3));
+                comboProductModel.addElement(item);
+                comboProduct_id.addItem(item.getID());
+                listProductModel.addElement(item.getName());
+            }
+            jListProduct.setModel(listProductModel);
+            
     }
 }
