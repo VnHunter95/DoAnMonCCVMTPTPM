@@ -5,21 +5,33 @@
  */
 package form;
 
+import com.sun.javafx.scene.EnteredExitedHandler;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.input.KeyCode;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.table.DefaultTableModel;
 import myclass.Ban;
+import myclass.HDTam;
 import myclass.MatHang;
 import myclass.Product;
 
@@ -30,15 +42,18 @@ import myclass.Product;
 public class frmHoaDonTinhTien extends javax.swing.JFrame {
     Ban ban = new Ban();
     MatHang mathang = new MatHang();
+    HDTam hd = new HDTam();
     DefaultListModel listTableModel = new DefaultListModel();
     DefaultComboBoxModel<String> comboTableModel = new DefaultComboBoxModel<>();
     DefaultListModel listProductModel = new DefaultListModel();
     DefaultComboBoxModel<Product> comboProductModel = new DefaultComboBoxModel<>();
+    DefaultTableModel HD_TamModel = new DefaultTableModel();
     /**
      * Creates new form frmHoaDonTinhTien
      */
     public frmHoaDonTinhTien() {
         initComponents();
+        addListener();
         loadData();
     }
 
@@ -74,7 +89,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         listTable = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableHD_Tam = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jRBPercentDiscount = new javax.swing.JRadioButton();
         jRBVipCardDiscount = new javax.swing.JRadioButton();
@@ -220,14 +235,9 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Bàn"));
 
-        listTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                listTableMouseReleased(evt);
-            }
-        });
         jScrollPane1.setViewportView(listTable);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableHD_Tam.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -238,7 +248,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jTableHD_Tam);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Khuyến Mãi"));
 
@@ -307,12 +317,20 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
         jLabel11.setText("Thanh Toán: ");
 
         jtxtTotalPrice.setEditable(false);
+        jtxtTotalPrice.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jtxtTotalPrice.setText("0");
 
         jTxtTax.setEditable(false);
+        jTxtTax.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTxtTax.setText("0");
 
         jTxtDiscount.setEditable(false);
+        jTxtDiscount.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTxtDiscount.setText("0");
 
         jTxtPayment.setEditable(false);
+        jTxtPayment.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTxtPayment.setText("0");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -380,11 +398,6 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Món"));
 
-        jListProduct.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jListProductMouseReleased(evt);
-            }
-        });
         jScrollPane3.setViewportView(jListProduct);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -448,14 +461,6 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
     private void jbtThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtThoatActionPerformed
        this.dispose();
     }//GEN-LAST:event_jbtThoatActionPerformed
-
-    private void jListProductMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListProductMouseReleased
-        comboProduct_id.setSelectedIndex(jListProduct.getSelectedIndex());
-    }//GEN-LAST:event_jListProductMouseReleased
-
-    private void listTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listTableMouseReleased
-       comboTable.setSelectedIndex(listTable.getSelectedIndex());
-    }//GEN-LAST:event_listTableMouseReleased
 
     /**
      * @param args the command line arguments
@@ -526,7 +531,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinerPercent;
     private javax.swing.JSpinner jSpinnerQuanity;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableHD_Tam;
     private javax.swing.JTextField jTxtDiscount;
     private javax.swing.JTextField jTxtPayment;
     private javax.swing.JTextField jTxtProduct_name;
@@ -540,6 +545,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
 
     private void loadData() {
         try {
+            LoadJTable();
             LoadTableData();
             LoadProductData();
         } catch (SQLException ex) {
@@ -562,7 +568,8 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
             }
             comboTable.setModel(comboTableModel);
             listTable.setModel(listTableModel);
-            
+            listTable.setSelectedIndex(0);
+            comboTable.setSelectedIndex(0);          
     }
 
     private void LoadProductData() throws SQLException {
@@ -577,6 +584,26 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                 listProductModel.addElement(item.getName());
             }
             jListProduct.setModel(listProductModel);
+            jListProduct.setSelectedIndex(0);
+            loadHD_TamData();
+            
+    }
+
+    private void LoadJTable() {
+            String []colsName = {"Id Món","Tên Món","Đơn Giá","Số Lượng","Thành Tiền"};
+            HD_TamModel.setColumnIdentifiers(colsName);
+            jTableHD_Tam.setModel(HD_TamModel);
+    }
+
+    private void addListener() {
+            comboTable.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                   if (e.getStateChange() == ItemEvent.SELECTED) {
+                       loadHD_TamData();
+                        
+                    }   }
+            });
             comboProduct_id.addItemListener(new ItemListener() {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
@@ -590,6 +617,118 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                     }
                 }
             });
-            
+            listTable.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                  int index = ((JList)e.getSource()).getSelectedIndex();
+                  comboTable.setSelectedIndex(index);
+                }
+            });
+            jListProduct.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    int index = ((JList)e.getSource()).getSelectedIndex();
+                    comboProduct_id.setSelectedIndex(index);    
+                }
+            } );
+            jRBNoDiscount.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                   if(e.getStateChange()==ItemEvent.SELECTED)   
+                   {
+                       jSpinerPercent.setEnabled(false);
+                       jSpinerPercent.setValue(0);
+                       jTxtDiscount.setText("0");
+                       calculatePayment();
+                   }
+                }
+            });
+            jRBVipCardDiscount.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                   if(e.getStateChange()==ItemEvent.SELECTED)   
+                   {
+                       jSpinerPercent.setEnabled(false);
+                       jSpinerPercent.setValue(0);
+                       double discount = 10 * (Double.valueOf(jtxtTotalPrice.getText())+Double.valueOf(jTxtTax.getText())) / 100;
+                       jTxtDiscount.setText(String.valueOf(discount));
+                       calculatePayment();
+                   }
+                }
+            });
+            jRBStampCardDiscount.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                   if(e.getStateChange()==ItemEvent.SELECTED)   
+                   {
+                       jSpinerPercent.setEnabled(false);
+                       jSpinerPercent.setValue(0);
+                       jTxtDiscount.setText(String.valueOf((double) 130000));
+                       calculatePayment();
+                   }
+                }
+            });
+            jRBPercentDiscount.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                   if(e.getStateChange()==ItemEvent.SELECTED)   
+                   {
+                       jSpinerPercent.setEnabled(true);
+                       jSpinerPercent.requestFocus();
+                       calculatePayment();
+                   }
+                }
+            });
+            SpinnerNumberModel m_numberSpinnerModel;
+            m_numberSpinnerModel = new SpinnerNumberModel(0, 0, 100, 1);
+            jSpinerPercent.setModel(m_numberSpinnerModel);
+            jSpinerPercent.addChangeListener(new ChangeListener() {                
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                     int percent = (int) jSpinerPercent.getValue();
+                     double discount = percent * (Double.valueOf(jtxtTotalPrice.getText())+Double.valueOf(jTxtTax.getText())) / 100;
+                     jTxtDiscount.setText(String.valueOf(discount));
+                     calculatePayment();
+                }
+            });
+ 
+    }
+    public void calculatePayment()
+    {
+        double discount = Double.valueOf(jTxtDiscount.getText());
+        double total = Double.valueOf(jtxtTotalPrice.getText());
+        double tax = Double.valueOf(jTxtTax.getText());
+        jTxtPayment.setText(String.valueOf(total + tax - discount));
+    }
+    public void loadHD_TamData()
+    {
+        try {
+                           double total = 0 ;
+                           double tax,payment;
+                           HD_TamModel.setRowCount(0);
+                           String tableId = (String) comboTable.getSelectedItem();
+                           ResultSet res = hd.getHD_TamByTable(tableId);
+                           while(res.next())
+                           {
+                               String rows[] = new String[5];
+                               rows[0]=res.getString(1);
+                               rows[1]=res.getString(2);
+                               rows[2]=res.getString(3);
+                               rows[3]=res.getString(4);
+                               rows[4]=res.getString(5);
+                               total+= res.getDouble(5);
+                               HD_TamModel.addRow(rows);
+                           }
+                           tax = 10*total/100;
+                           jtxtTotalPrice.setText(String.valueOf(total));
+                           jTxtTax.setText(String.valueOf(tax));
+                           if(!jRBNoDiscount.isSelected())
+                           {
+                               jRBNoDiscount.setSelected(true);
+                           }
+                           calculatePayment();
+                       } catch (SQLException ex) {
+                           Logger.getLogger(frmHoaDonTinhTien.class.getName()).log(Level.SEVERE, null, ex);
+                       }
     }
 }
