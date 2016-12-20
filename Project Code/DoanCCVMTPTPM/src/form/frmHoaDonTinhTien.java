@@ -5,6 +5,8 @@
  */
 package form;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -14,6 +16,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 import myclass.Ban;
 import myclass.MatHang;
 import myclass.Product;
@@ -136,6 +141,12 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Giá Tiền: ");
+
+        jTxtProduct_name.setEditable(false);
+
+        jTxtProduct_type.setEditable(false);
+
+        jTxtProduct_price.setEditable(false);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -290,13 +301,13 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("Thanh Toán: ");
 
-        jtxtTotalPrice.setEnabled(false);
+        jtxtTotalPrice.setEditable(false);
 
-        jTxtTax.setEnabled(false);
+        jTxtTax.setEditable(false);
 
-        jTxtDiscount.setEnabled(false);
+        jTxtDiscount.setEditable(false);
 
-        jTxtPayment.setEnabled(false);
+        jTxtPayment.setEditable(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -384,13 +395,10 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -527,6 +535,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
             }
             comboTable.setModel(comboTableModel);
             listTable.setModel(listTableModel);
+            
     }
 
     private void LoadProductData() throws SQLException {
@@ -541,6 +550,19 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                 listProductModel.addElement(item.getName());
             }
             jListProduct.setModel(listProductModel);
+            comboProduct_id.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        String product_id = (String) e.getItem();
+                        Product selected_product = comboProductModel.getElementAt(comboProduct_id.getSelectedIndex());
+                        jTxtProduct_name.setText(selected_product.getName());
+                        jTxtProduct_price.setText(String.valueOf(selected_product.getPrice()));
+                        jTxtProduct_type.setText(selected_product.getType());
+                        jSpinnerQuanity.setValue(1);
+                    }
+                }
+            });
             
     }
 }
