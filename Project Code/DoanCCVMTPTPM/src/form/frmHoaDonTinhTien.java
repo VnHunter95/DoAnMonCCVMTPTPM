@@ -220,6 +220,11 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Bàn"));
 
+        listTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                listTableMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(listTable);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -375,6 +380,11 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Món"));
 
+        jListProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jListProductMouseReleased(evt);
+            }
+        });
         jScrollPane3.setViewportView(jListProduct);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -438,6 +448,14 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
     private void jbtThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtThoatActionPerformed
        this.dispose();
     }//GEN-LAST:event_jbtThoatActionPerformed
+
+    private void jListProductMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListProductMouseReleased
+        comboProduct_id.setSelectedIndex(jListProduct.getSelectedIndex());
+    }//GEN-LAST:event_jListProductMouseReleased
+
+    private void listTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listTableMouseReleased
+       comboTable.setSelectedIndex(listTable.getSelectedIndex());
+    }//GEN-LAST:event_listTableMouseReleased
 
     /**
      * @param args the command line arguments
