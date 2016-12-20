@@ -389,6 +389,11 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
         );
 
         jbtThoat.setText("Thoát");
+        jbtThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtThoatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -429,6 +434,10 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbtThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtThoatActionPerformed
+       this.dispose();
+    }//GEN-LAST:event_jbtThoatActionPerformed
 
     /**
      * @param args the command line arguments
