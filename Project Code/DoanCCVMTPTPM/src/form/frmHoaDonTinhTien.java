@@ -751,7 +751,12 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
         double discount = Double.valueOf(jTxtDiscount.getText());
         double total = Double.valueOf(jtxtTotalPrice.getText());
         double tax = Double.valueOf(jTxtTax.getText());
-        jTxtPayment.setText(String.valueOf(total + tax - discount));
+        double payment = total + tax - discount;
+        if(payment<0)
+        {
+            payment=0;
+        }
+        jTxtPayment.setText(String.valueOf(payment));
     }
     public void loadHD_TamData()
     {
