@@ -143,11 +143,26 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
         jLabel4.setText("Tên Món:");
 
         jBtAdd.setText("Thêm");
+        jBtAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtAddActionPerformed(evt);
+            }
+        });
 
         jBtEdit.setText("Sửa");
+        jBtEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtEditActionPerformed(evt);
+            }
+        });
 
         jBtRemove.setText("Xóa");
         jBtRemove.setPreferredSize(new java.awt.Dimension(59, 23));
+        jBtRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtRemoveActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -462,6 +477,43 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
        this.dispose();
     }//GEN-LAST:event_jbtThoatActionPerformed
 
+    private void jBtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtAddActionPerformed
+        try {
+            hd.addProductToTable(comboTable.getSelectedItem().toString(),comboProduct_id.getSelectedItem().toString());
+            loadHD_TamData();
+        } catch (SQLException ex) {
+            Logger.getLogger(frmHoaDonTinhTien.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jBtAddActionPerformed
+
+    private void jBtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtRemoveActionPerformed
+       try {
+            if(jTableHD_Tam.getSelectedRowCount()<=0)
+            {
+                showMessage("Vui lòng chọn món cân xóa");
+                return;
+            }
+             showMessage("Xóa Món \""+HD_TamModel.getValueAt(jTableHD_Tam.getSelectedRow(), 1) +"\" Trong Bàn \""+comboTable.getSelectedItem().toString()+"\" ?");
+            hd.removeProduct(comboTable.getSelectedItem().toString(),comboProduct_id.getSelectedItem().toString());
+            loadHD_TamData();
+        } catch (SQLException ex) {
+            Logger.getLogger(frmHoaDonTinhTien.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jBtRemoveActionPerformed
+
+    private void jBtEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtEditActionPerformed
+           try {
+            if(jTableHD_Tam.getSelectedRowCount()<=0)
+            {
+                showMessage("Vui lòng chọn món cân sửa");
+            }
+            hd.changeProductQuanity(comboTable.getSelectedItem().toString(),comboProduct_id.getSelectedItem().toString(),(int)jSpinnerQuanity.getValue());         
+            loadHD_TamData();
+        } catch (SQLException ex) {
+            Logger.getLogger(frmHoaDonTinhTien.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jBtEditActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -679,6 +731,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                    }
                 }
             });
+            jSpinnerQuanity.setModel(new SpinnerNumberModel(1, 1, 100, 1));
             SpinnerNumberModel m_numberSpinnerModel;
             m_numberSpinnerModel = new SpinnerNumberModel(0, 0, 100, 1);
             jSpinerPercent.setModel(m_numberSpinnerModel);
@@ -698,7 +751,12 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
         double discount = Double.valueOf(jTxtDiscount.getText());
         double total = Double.valueOf(jtxtTotalPrice.getText());
         double tax = Double.valueOf(jTxtTax.getText());
-        jTxtPayment.setText(String.valueOf(total + tax - discount));
+        double payment = total + tax - discount;
+        if(payment<0)
+        {
+            payment=0;
+        }
+        jTxtPayment.setText(String.valueOf(payment));
     }
     public void loadHD_TamData()
     {
@@ -713,8 +771,8 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                                String rows[] = new String[5];
                                rows[0]=res.getString(1);
                                rows[1]=res.getString(2);
-                               rows[2]=res.getString(3);
-                               rows[3]=res.getString(4);
+                               rows[2]=res.getString(4);
+                               rows[3]=res.getString(3);
                                rows[4]=res.getString(5);
                                total+= res.getDouble(5);
                                HD_TamModel.addRow(rows);
