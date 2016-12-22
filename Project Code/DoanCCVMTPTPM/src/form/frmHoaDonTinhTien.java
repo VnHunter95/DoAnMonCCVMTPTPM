@@ -15,20 +15,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.input.KeyCode;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.ListModel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.table.DefaultTableModel;
 import myclass.Ban;
 import myclass.HDTam;
@@ -47,7 +35,12 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
     DefaultComboBoxModel<String> comboTableModel = new DefaultComboBoxModel<>();
     DefaultListModel listProductModel = new DefaultListModel();
     DefaultComboBoxModel<Product> comboProductModel = new DefaultComboBoxModel<>();
-    DefaultTableModel HD_TamModel = new DefaultTableModel();
+    DefaultTableModel HD_TamModel = new DefaultTableModel(){
+    @Override
+    public boolean isCellEditable(int i, int i1) {
+        return false; //To change body of generated methods, choose Tools | Templates.
+    }
+    };
     /**
      * Creates new form frmHoaDonTinhTien
      */
@@ -314,6 +307,11 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
         );
 
         jBtSaveAndPrint.setText("Lưu Và In Hóa Đơn");
+        jBtSaveAndPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtSaveAndPrintActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -493,9 +491,12 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                 showMessage("Vui lòng chọn món cân xóa");
                 return;
             }
-             showMessage("Xóa Món \""+HD_TamModel.getValueAt(jTableHD_Tam.getSelectedRow(), 1) +"\" Trong Bàn \""+comboTable.getSelectedItem().toString()+"\" ?");
-            hd.removeProduct(comboTable.getSelectedItem().toString(),comboProduct_id.getSelectedItem().toString());
-            loadHD_TamData();
+             int res = JOptionPane.showConfirmDialog(null,"Xóa Món \""+HD_TamModel.getValueAt(jTableHD_Tam.getSelectedRow(), 1) +"\" Trong Bàn \""+comboTable.getSelectedItem().toString()+"\" ?","Xác Nhận",JOptionPane.YES_NO_OPTION);
+            if(res==JOptionPane.YES_OPTION)
+            {
+                hd.removeProduct(comboTable.getSelectedItem().toString(),comboProduct_id.getSelectedItem().toString());
+                loadHD_TamData();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(frmHoaDonTinhTien.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -506,6 +507,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
             if(jTableHD_Tam.getSelectedRowCount()<=0)
             {
                 showMessage("Vui lòng chọn món cân sửa");
+                return;
             }
             hd.changeProductQuanity(comboTable.getSelectedItem().toString(),comboProduct_id.getSelectedItem().toString(),(int)jSpinnerQuanity.getValue());         
             loadHD_TamData();
@@ -513,6 +515,10 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
             Logger.getLogger(frmHoaDonTinhTien.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jBtEditActionPerformed
+
+    private void jBtSaveAndPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtSaveAndPrintActionPerformed
+       
+    }//GEN-LAST:event_jBtSaveAndPrintActionPerformed
 
     /**
      * @param args the command line arguments
@@ -673,7 +679,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                 @Override
                 public void valueChanged(ListSelectionEvent e) {
                   int index = ((JList)e.getSource()).getSelectedIndex();
-                  comboTable.setSelectedIndex(index);
+                    comboTable.setSelectedIndex(index);
                 }
             });
             jListProduct.addListSelectionListener(new ListSelectionListener() {
@@ -744,6 +750,27 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                      calculatePayment();
                 }
             });
+            jTableHD_Tam.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent lse) {
+                    if (!lse.getValueIsAdjusting()) {
+                        if(jTableHD_Tam.getSelectedRow()==-1)
+                        {
+                            return;
+                        }
+                        int rowcount = jTableHD_Tam.getRowCount();
+                        int selectedrow = jTableHD_Tam.getSelectedRow();
+                        String productid = jTableHD_Tam.getValueAt(jTableHD_Tam.getSelectedRow(),0).toString();
+                        for(int i = 0 ; i<comboProduct_id.getItemCount();i++)
+                        {
+                            String id = comboProduct_id.getItemAt(i);
+                            if(productid.trim().compareTo(id.trim())==0)
+                            {
+                                comboProduct_id.setSelectedIndex(i);
+                            }
+                        }
+                    }
+                }
+});
  
     }
     public void calculatePayment()
@@ -758,9 +785,12 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
         }
         jTxtPayment.setText(String.valueOf(payment));
     }
+    
     public void loadHD_TamData()
     {
         try {
+                           jTableHD_Tam.clearSelection();
+                           jTableHD_Tam.getSelectionModel().clearSelection();
                            double total = 0 ;
                            double tax,payment;
                            HD_TamModel.setRowCount(0);

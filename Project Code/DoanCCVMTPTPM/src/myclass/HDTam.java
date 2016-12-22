@@ -26,7 +26,7 @@ public class HDTam {
     public void changeProductQuanity(String tableid,String productid,int Quanity) throws SQLException
     {
         con.connectSQL();
-          con.UpdateData("Update HD_Tam Set SoLuong = " + String.valueOf(Quanity)+" Where IdBan like '"+tableid+"' and IDMH like '"+productid+"'");
+        con.UpdateData("Update HD_Tam Set SoLuong = " + String.valueOf(Quanity)+" Where IdBan like '"+tableid+"' and IDMH like '"+productid+"'");
     }
     public void addProductToTable(String tableid,String productid) throws SQLException
     {

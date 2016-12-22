@@ -538,6 +538,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="L&#x1b0;u V&#xe0; In H&#xf3;a &#x110;&#x1a1;n"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtSaveAndPrintActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
