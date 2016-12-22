@@ -18,11 +18,15 @@ public class HoaDon {
     public void insertCT_HD(int invoiceid,String productid,int quanity,double price) throws SQLException
     {
         con.connectSQL();
-        con.UpdateData("INSERT INTO CT_HD(SoHD,IDMH,DonGia,SoLuong,ThanhTien) Values("+invoiceid+",'"+productid+"',"+price+","+quanity+",1"+price*quanity+")");
+        con.UpdateData("INSERT INTO CT_HD(SoHD,IDMH,DonGia,SoLuong,ThanhTien) Values("+invoiceid+",'"+productid+"',"+price+","+quanity+","+price*quanity+")");
     }
     public int getLatestId() throws SQLException
     {
-        ResultSet res = con.LoadData("SELECT IDENT_CURRENT ('HoaDon')");
-        return res.getInt(1);
+        ResultSet res = con.LoadData("SELECT IDENT_CURRENT ('HoaDon') as [ID]");
+        if(res.next())
+        {
+            return res.getInt("ID");
+        }
+        return -1;
     }
 }
