@@ -19,6 +19,11 @@ public class TaiKhoan {
          String sql = "SELECT * FROM TaiKhoan";                   
          return cn.LoadData(sql);         
      }
+     public ResultSet LoadTaiKhoanTheoTenVaMatKhau(String user,String pass) throws SQLException{    
+         cn.connectSQL();
+         String sql = "SELECT * FROM TaiKhoan WHERE Username ='"+user+"' and Password ='"+pass+"'";                   
+         return cn.LoadData(sql);         
+     }
      public ResultSet LoadTaiKhoanByUsername(String user) throws SQLException{    
          cn.connectSQL();
          String sql = "SELECT * FROM TaiKhoan WHERE Username like '" + user +"'";                   

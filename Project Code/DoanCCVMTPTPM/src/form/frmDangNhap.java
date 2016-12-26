@@ -5,17 +5,31 @@
  */
 package form;
 
+import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import myclass.TaiKhoan;
+
 /**
  *
  * @author Hunter95
  */
 public class frmDangNhap extends javax.swing.JFrame {
 
+    ResultSet result = null;
+    private final TaiKhoan TK = new TaiKhoan();
+
     /**
      * Creates new form frmDangNhap
      */
-    public frmDangNhap() {
+    public frmDangNhap() throws SQLException {
         initComponents();
+
     }
 
     /**
@@ -28,30 +42,142 @@ public class frmDangNhap extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        edtTaiKhoan = new javax.swing.JTextField();
+        btnDangNhap = new javax.swing.JButton();
+        btnThoat = new javax.swing.JButton();
+        edtMatKhau = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setName("Đăng nhập"); // NOI18N
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
-        jLabel1.setText("FORM DANG NHAP");
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel1.setText("Đăng Nhập");
+
+        jLabel2.setText("Tài khoản:");
+
+        jLabel3.setText("Mật khẩu:");
+
+        btnDangNhap.setText("Đăng nhập");
+        btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDangNhapActionPerformed(evt);
+            }
+        });
+
+        btnThoat.setText("Thoát");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(158, 158, 158)
-                .addComponent(jLabel1)
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(158, 158, 158)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(69, 69, 69)
+                                .addComponent(btnDangNhap)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnThoat))
+                            .addComponent(edtTaiKhoan)
+                            .addComponent(edtMatKhau))))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(edtTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(edtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDangNhap)
+                    .addComponent(btnThoat))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        int exit = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát không?", "Thông báo", JOptionPane.YES_NO_OPTION);
+        if (exit == JOptionPane.YES_OPTION) {
+            dispose();
+        }
+    }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+        String taiKhoan = edtTaiKhoan.getText();
+        String matKhau = edtMatKhau.getText();
+
+        Pattern p = Pattern.compile("[^A-Za-z0-9]");
+        Matcher m = p.matcher(taiKhoan);
+        Matcher m1 = p.matcher(matKhau);
+        boolean b = m.find();
+        boolean b1 = m1.find();
+
+        try {
+            result = TK.LoadTaiKhoanTheoTenVaMatKhau(taiKhoan, matKhau);
+            if (result.next() == true) {
+                if (taiKhoan.equals(result.getString("Username")) && matKhau.equals(result.getString("Password"))) {
+                    JOptionPane.showMessageDialog(null, "Đăng nhập thành công!",
+                            "Thông báo", 1);
+                    this.hide();
+                    new frmManHinhChinh(result.getString("Username"),result.getString("CapDo")).setVisible(true);
+                    new frmDangNhap().setVisible(false);
+                    return;
+
+                }
+
+            } else if (b == true || b1 == true) {
+                JOptionPane.showMessageDialog(null, "Tài khoản và mật khẩu có chứa ký tự đặc biệt",
+                        "Thông báo", 1);
+                return;
+            } else if (taiKhoan.length() == 0 || matKhau.length() == 0) {
+                JOptionPane.showMessageDialog(null, "Mật khẩu và tài khoản không được để trống", "Thông báo", 1);
+                return;
+            } else {
+                JOptionPane.showMessageDialog(null, "Tên hoặc mật khẩu không đúng!",
+                        "Thông báo", 1);
+                edtMatKhau.setText(null);
+                return;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmDangNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnDangNhapActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+
+    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments
@@ -83,12 +209,22 @@ public class frmDangNhap extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmDangNhap().setVisible(true);
+                try {
+                    new frmDangNhap().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmDangNhap.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDangNhap;
+    private javax.swing.JButton btnThoat;
+    private javax.swing.JPasswordField edtMatKhau;
+    private javax.swing.JTextField edtTaiKhoan;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
