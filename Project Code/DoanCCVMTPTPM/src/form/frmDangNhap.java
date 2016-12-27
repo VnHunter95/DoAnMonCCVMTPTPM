@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import myclass.Connect;
 import myclass.TaiKhoan;
 
 /**
@@ -23,7 +24,6 @@ public class frmDangNhap extends javax.swing.JFrame {
 
     ResultSet result = null;
     private final TaiKhoan TK = new TaiKhoan();
-
     /**
      * Creates new form frmDangNhap
      */
@@ -146,7 +146,7 @@ public class frmDangNhap extends javax.swing.JFrame {
 
         try {
             result = TK.LoadTaiKhoanTheoTenVaMatKhau(taiKhoan, matKhau);
-            if (result.next() == true) {
+            if (result.next()) {
                 if (taiKhoan.equals(result.getString("Username")) && matKhau.equals(result.getString("Password"))) {
                     JOptionPane.showMessageDialog(null, "Đăng nhập thành công!",
                             "Thông báo", 1);
