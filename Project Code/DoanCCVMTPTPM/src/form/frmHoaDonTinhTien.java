@@ -10,8 +10,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.input.KeyCode;
@@ -542,6 +544,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
             }
             hdtam.deleteHD_TamByTable(tableid);
             loadHD_TamData();
+            hd.printInVoice(invoiceid);
         } catch (SQLException ex) {
             Logger.getLogger(frmHoaDonTinhTien.class.getName()).log(Level.SEVERE, null, ex);
         }

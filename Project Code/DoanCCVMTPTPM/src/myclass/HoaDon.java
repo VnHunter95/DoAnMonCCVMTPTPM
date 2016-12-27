@@ -1,11 +1,19 @@
 
 package myclass;
 
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class HoaDon {
     Connect con = new Connect();
@@ -29,4 +37,18 @@ public class HoaDon {
         }
         return -1;
     }
+
+    public void printInVoice(int invoiceid) {
+        try {
+            String reportName = "report/inVoice.jasper";
+            HashMap map = new HashMap();
+            map.put("hdId",invoiceid);
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream(reportName);
+            JasperPrint jp = JasperFillManager.fillReport(is,map,con.getCon());
+            JasperViewer jv = new JasperViewer(jp,false);
+            jv.setVisible(true);
+        } catch (JRException ex) {
+            Logger.getLogger(HoaDon.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ }
 }

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="450" pageHeight="842" columnWidth="410" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="84b9399a-22fe-41d8-a69e-774dc3643f56">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="hdId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[Select H.SoHD,NgayLap,TongTien,GiamGia,Thue,H.ThanhTien as [TongtienHD],H.IdBan, mh.TenMH, ct.DonGia,ct.SoLuong, ct.thanhtien as [ct_thanhtien] from HoaDon H,CT_HD CT, MatHang mh Where H.SoHD = CT.SoHD and CT.IdMh = mh.IdMh and H.soHD = $P{hdId}]]>
+	</queryString>
+	<field name="SoHD" class="java.lang.Integer"/>
+	<field name="NgayLap" class="java.sql.Timestamp"/>
+	<field name="TongTien" class="java.math.BigDecimal"/>
+	<field name="GiamGia" class="java.math.BigDecimal"/>
+	<field name="Thue" class="java.math.BigDecimal"/>
+	<field name="TongtienHD" class="java.math.BigDecimal"/>
+	<field name="IdBan" class="java.lang.String"/>
+	<field name="TenMH" class="java.lang.String"/>
+	<field name="DonGia" class="java.math.BigDecimal"/>
+	<field name="SoLuong" class="java.lang.Short"/>
+	<field name="ct_thanhtien" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="13" width="424" height="33" uuid="921ac48d-799f-4baa-be67-99c562d8e25b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Hóa Đơn Tình Tiền]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="0" y="46" width="424" height="22" uuid="cbf02c6a-2661-43c8-b167-b29c3eb6f040"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[[Tên Nhà Hàng]]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="0ec961c4-9b03-4613-beb6-ccef4bac3727"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="138" height="15" uuid="185b334f-eddc-4df4-909f-2fcd174bf218"/>
+				<text><![CDATA[Tên Món]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="110" y="19" width="166" height="15" uuid="1c487315-2459-478f-b13c-3826cad74096"/>
+				<text><![CDATA[Đơn Giá]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="224" y="19" width="190" height="15" uuid="c50a8e4b-b895-402c-9940-6d1a7cf6766d"/>
+				<text><![CDATA[Số Lượng]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="296" y="19" width="138" height="15" uuid="220e2ec2-3a91-4f2e-bd63-d08a4e4a635f"/>
+				<text><![CDATA[Thành Tiền]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="e613718e-eac0-4a1e-9c78-53e5f19ac24f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="110" height="15" uuid="4b1d6f58-0025-4f6d-b018-1f1d2599912e"/>
+				<textFieldExpression><![CDATA[$F{TenMH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="110" y="0" width="114" height="15" uuid="271650f2-0727-4827-bb22-326804bdc78a"/>
+				<textFieldExpression><![CDATA[$F{DonGia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="224" y="0" width="190" height="15" uuid="d7c76d4b-b97e-4e01-869d-adb82be243a5"/>
+				<textFieldExpression><![CDATA[$F{SoLuong}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="296" y="1" width="138" height="15" uuid="f45047e1-c30f-4f97-bd10-f89867c59106"/>
+				<textFieldExpression><![CDATA[$F{ct_thanhtien}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="29e7631b-36b7-45a1-9eb1-f02655b61a4c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="296" y="25" width="114" height="20" uuid="97cf2017-24f7-4895-abef-461492ee1070"/>
+				<textFieldExpression><![CDATA[$F{TongTien}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="196" y="25" width="100" height="20" uuid="bcc4932b-91fa-4e27-8f1d-41933aab2492"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Tổng Tiền: ]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="68" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
