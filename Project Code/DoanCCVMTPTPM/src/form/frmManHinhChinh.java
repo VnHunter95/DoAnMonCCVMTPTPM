@@ -14,10 +14,23 @@ public class frmManHinhChinh extends javax.swing.JFrame {
     /**
      * Creates new form frmManHinhChinh
      */
-    public frmManHinhChinh() {
+    public frmManHinhChinh(String userName, String CapDo) {
         initComponents();
+        edtUsername.setText("Tên Tài Khoản: "+userName);
+        if (CapDo.equals(true)) {
+            edtQuyen.setText("Quyền: admin");
+        } else {
+            edtQuyen.setText("Quyền: user");
+        }
     }
 
+    private frmManHinhChinh() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+//    frmManHinhChinh(String userName) {
+//        
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,10 +41,16 @@ public class frmManHinhChinh extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        edtUsername = new javax.swing.JLabel();
+        edtQuyen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("FORM MAN HINH CHINH");
+
+        edtUsername.setText("User");
+
+        edtQuyen.setText("Quyen");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -41,12 +60,20 @@ public class frmManHinhChinh extends javax.swing.JFrame {
                 .addGap(178, 178, 178)
                 .addComponent(jLabel1)
                 .addContainerGap(105, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(edtUsername)
+                .addGap(76, 76, 76)
+                .addComponent(edtQuyen)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 275, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(edtUsername)
+                    .addComponent(edtQuyen)))
         );
 
         pack();
@@ -88,6 +115,8 @@ public class frmManHinhChinh extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel edtQuyen;
+    private javax.swing.JLabel edtUsername;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
