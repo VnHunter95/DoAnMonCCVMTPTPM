@@ -40,14 +40,14 @@ public class frmQLDoanhThu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(167, 167, 167)
                 .addComponent(jLabel1)
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addContainerGap(246, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addContainerGap(394, Short.MAX_VALUE))
         );
 
         pack();

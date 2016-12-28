@@ -4,18 +4,80 @@
  * and open the template in the editor.
  */
 package form;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import myclass.MatHang;
 /**
  *
  * @author Hunter95
  */
 public class frmQLMatHang extends javax.swing.JFrame {
-
-    /**
-     * Creates new form frmQLMatHang
-     */
-    public frmQLMatHang() {
+ private final  MatHang mh = new MatHang();
+ private boolean cothem=true;
+ private final DefaultTableModel tableModel = new DefaultTableModel();
+    public void ShowData() throws SQLException {
+        
+        try {
+            ResultSet result = mh.LoadAllMatHangData();
+            while (result.next()) { // nếu còn đọc tiếp được một dòng dữ liệu
+                String rows[] = new String[4];
+                rows[0] = result.getString(1); // lấy dữ liệu tại cột số 1 (ứng với mã hàng)
+                rows[1] = result.getString(2);
+                rows[2] = result.getString(3);
+                rows[3] = result.getString(4);
+                // lấy dữ liệu tai cột số 2 ứng với tên hàng
+                tableModel.addRow(rows); // đưa dòng dữ liệu vào tableModel
+                //mỗi lần có sự thay đổi dữ liệu ở tableModel thì Jtable sẽ tự động update
+            }
+        } catch (SQLException e) {
+           
+        
+ }
+ 
+ } 
+    public void ClearData() throws SQLException {
+        //Lay chi so dong cuoi cung
+        int n = tableModel.getRowCount() - 1;
+        for (int i = n; i >= 0; i--) {
+            tableModel.removeRow(i);//Remove tung dong
+        }
+    }
+    private void setNull()
+    {
+            this.jTextFieldID.setText(null);
+            this.jTextFieldLoai.setText(null);
+            this.jTextFieldTenMon.setText(null);
+            this.jTextFieldDonGia.setText("0");
+            this.jTextFieldID.requestFocus();
+    }
+    private void setKhoa(boolean  a){
+        this.jTextFieldID.setEnabled(!a);
+        this.jTextFieldLoai.setEnabled(!a);
+        this.jTextFieldTenMon.setEnabled(!a);
+        this.jTextFieldDonGia.setEnabled(!a);
+    }
+    private void setButton (boolean a){
+        this.jButtonKoLuu.setEnabled(!a);
+        this.jButtonLuu.setEnabled(!a);
+        this.jButtonSua.setEnabled(a);
+        this.jButtonThem.setEnabled(a);
+        this.jButtonXoa.setEnabled(a);
+    }
+    
+    public frmQLMatHang() throws SQLException {
         initComponents();
+        String []colsName = {"ID", "Ten Mon","Don gia","Loai"};
+        tableModel.setColumnIdentifiers(colsName); 
+        jTable1.setModel(tableModel); 
+        ShowData(); 
+        setNull();
+        setKhoa(cothem);
+        setButton(cothem);
+        
     }
 
     /**
@@ -28,30 +90,319 @@ public class frmQLMatHang extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldID = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldLoai = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jTextFieldTenMon = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jButtonThem = new javax.swing.JButton();
+        jButtonXoa = new javax.swing.JButton();
+        jButtonSua = new javax.swing.JButton();
+        jButtonLuu = new javax.swing.JButton();
+        jButtonKoLuu = new javax.swing.JButton();
+        jButtonThoat = new javax.swing.JButton();
+        jTextFieldDonGia = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("QL MAT HANG");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setText("QL Mon AN");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Chi tiet mat hang"));
+
+        jLabel2.setText("id");
+
+        jLabel3.setText("Loai");
+
+        jLabel4.setText("Ten Mon");
+
+        jLabel5.setText("Don Gia");
+
+        jButtonThem.setText("Them");
+        jButtonThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonThemActionPerformed(evt);
+            }
+        });
+
+        jButtonXoa.setText("Xoa");
+        jButtonXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonXoaActionPerformed(evt);
+            }
+        });
+
+        jButtonSua.setText("Sua");
+        jButtonSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSuaActionPerformed(evt);
+            }
+        });
+
+        jButtonLuu.setText("Luu");
+        jButtonLuu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLuuActionPerformed(evt);
+            }
+        });
+
+        jButtonKoLuu.setText("Ko luu");
+        jButtonKoLuu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonKoLuuActionPerformed(evt);
+            }
+        });
+
+        jButtonThoat.setText("thoat");
+        jButtonThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonThoatActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextFieldID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                            .addComponent(jTextFieldLoai, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldTenMon, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButtonLuu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonKoLuu, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonThoat, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                            .addComponent(jButtonSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldDonGia)))
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextFieldLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextFieldTenMon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextFieldDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonThem)
+                    .addComponent(jButtonXoa)
+                    .addComponent(jButtonSua))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonLuu)
+                    .addComponent(jButtonKoLuu)
+                    .addComponent(jButtonThoat))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Danh Sach Mat Hang"));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Ten Mon", "Don Gia", "Loai"
+            }
+        ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(173, 173, 173)
-                .addComponent(jLabel1)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(269, 269, 269)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuaActionPerformed
+        // TODO add your handling code here:
+        String ml = jTextFieldID.getText();
+        if (ml.length() == 0) //Chua chon Ma loai
+        {
+            JOptionPane.showMessageDialog(null, "Vui long chon loi can sua","Thong bao", 1);
+        } else {
+            setKhoa(false);//Mo khoa cac TextField
+            this.jTextFieldID.enable(false);
+            setButton(false); //Khoa cac Button
+            cothem = false; //Gan cothem=false de ghi nhan trang thai la sua
+        }
+
+    }//GEN-LAST:event_jButtonSuaActionPerformed
+
+    private void jButtonThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonThoatActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+
+    }//GEN-LAST:event_jButtonThoatActionPerformed
+
+    private void jButtonXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonXoaActionPerformed
+        // TODO add your handling code here:
+        String ml = jTextFieldID.getText();
+        try {
+            if (ml.length() == 0) {
+                JOptionPane.showMessageDialog(null, "Chon 1 loai SP de xoa",
+                        "Thong bao", 1);
+            } else {
+                if (JOptionPane.showConfirmDialog(null, "Ban muon xoa loai " + ml + " nay hay khong ? ","  Thong bao",2)==0)
+               {
+                    mh.DeleteMatHangById(ml);//goi ham xoa du lieu theo ma loai
+                    ClearData();//Xoa du lieu trong tableModel
+                    ShowData();//Do du lieu vao table Model
+                    setNull();//Xoa trang Textfield
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Xóa thất bại", "Thong bao", 1);
+        }
+
+    }//GEN-LAST:event_jButtonXoaActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+            int row = this.jTable1.getSelectedRow();
+            String ml = (this.jTable1.getValueAt(row, 0).toString());
+                this.jTextFieldID.setText(this.jTable1.getValueAt(row, 0).toString());
+                this.jTextFieldLoai.setText(this.jTable1.getValueAt(row, 3).toString());
+                this.jTextFieldDonGia.setText(this.jTable1.getValueAt(row, 2).toString());
+                this.jTextFieldTenMon.setText(this.jTable1.getValueAt(row, 1).toString());
+         
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButtonThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonThemActionPerformed
+        // TODO add your handling code here:
+        setNull();//Xoa trang TextField
+        setKhoa(false);//Mo khoa TextField
+        setButton(false);//Goi ham khoa cac Button
+        cothem = true;//Gan cothem = true de ghi nhan trang thai them moi
+
+    }//GEN-LAST:event_jButtonThemActionPerformed
+
+    private void jButtonLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLuuActionPerformed
+        // TODO add your handling code here:
+        String ml = jTextFieldID.getText();
+        String tl = jTextFieldTenMon.getText();
+        String dg = jTextFieldDonGia.getText();
+        String l= jTextFieldLoai.getText();
+        if (ml.length() == 0 || tl.length() == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Vui long nhap Ma loai va ten loai", "Thong bao", 1);
+        } else {
+            if (ml.length() > 6 || tl.length() > 30) {
+                JOptionPane.showMessageDialog(null,
+                        "Ma loai chi 6 ky tu, ten loai la 30", "Thong bao", 1);
+            } else {
+                try {
+                    if (cothem == true) //Luu cho tthem moi
+                    {
+                        mh.InsertMatHang(ml,tl, dg,l);
+                        
+                    } else //Luu cho sua
+                    {
+                        mh.EditMatHang( tl,dg,l);
+                    }
+                    ClearData(); //goi ham xoa du lieu tron tableModel
+                    ShowData(); //Do lai du lieu vao Table Model
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Cap nhat that bai", "Thong bao", 1);
+                }
+                setKhoa(false);
+                setButton(false);
+            }
+        }
+
+    }//GEN-LAST:event_jButtonLuuActionPerformed
+
+    private void jButtonKoLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKoLuuActionPerformed
+        // TODO add your handling code here:
+        setNull();
+        setKhoa(false);
+        setButton(false);
+    }//GEN-LAST:event_jButtonKoLuuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -83,12 +434,34 @@ public class frmQLMatHang extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmQLMatHang().setVisible(true);
+                try {
+                    new frmQLMatHang().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmQLMatHang.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonKoLuu;
+    private javax.swing.JButton jButtonLuu;
+    private javax.swing.JButton jButtonSua;
+    private javax.swing.JButton jButtonThem;
+    private javax.swing.JButton jButtonThoat;
+    private javax.swing.JButton jButtonXoa;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextFieldDonGia;
+    private javax.swing.JTextField jTextFieldID;
+    private javax.swing.JTextField jTextFieldLoai;
+    private javax.swing.JTextField jTextFieldTenMon;
     // End of variables declaration//GEN-END:variables
 }
