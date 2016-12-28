@@ -5,17 +5,59 @@
  */
 package form;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import myclass.Connect;
+import myclass.TaiKhoan;
+
 /**
  *
  * @author Hunter95
  */
 public class frmQLTaiKhoan extends javax.swing.JFrame {
-
+    private Connect conn = null;
+    private DefaultTableModel tableModel = new DefaultTableModel();
     /**
      * Creates new form frmQLTaiKhoan
      */
-    public frmQLTaiKhoan() {
+    ResultSet result = null;
+    private final TaiKhoan TK = new TaiKhoan();
+    public void QLAccount() throws SQLException{
+        String []colsName = {"Tên tài khoản","Password","Là Admin"};
+        tableModel.setColumnIdentifiers(colsName);
+        tbvAccount.setModel(tableModel);
+        updateData(TK.LoadAllTaiKhoanata());
+    }
+    public void updateData(ResultSet result){
+        try {
+            while(result.next()){ // nếu còn đọc tiếp được một dòng dữ liệu
+                String rows[] = new String[3];
+                rows[0] = result.getString(1); // lấy dữ liệu tại cột số 1 (ứng với mã sp)
+                rows[1] = result.getString(2);
+                //rows[2] = 
+                if (result.getBoolean(3)){
+                    rows[2]= "admin";               
+                }
+                else{rows[2]= "user"; }
+                tableModel.addRow(rows);
+                //tableModel.setValueAt(result.getBoolean(3), tableModel.getRowCount()-1, 3);
+            }
+                
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+       }
+    }
+            
+            
+    
+    public frmQLTaiKhoan() throws SQLException {
         initComponents();
+        QLAccount();
     }
 
     /**
@@ -27,31 +69,213 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbvAccount = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        btnAdd = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        txtAccount = new javax.swing.JTextField();
+        txtPass = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        cbxAdmin = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Quản Lí Tài Khoản");
+        setBackground(new java.awt.Color(204, 255, 204));
 
-        jLabel1.setText("QL TAI KHOAN");
+        jLabel2.setText("Danh sách tài khoản");
+
+        tbvAccount.setBackground(new java.awt.Color(153, 204, 255));
+        tbvAccount.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tbvAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbvAccountMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbvAccount);
+
+        jPanel1.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Quản lý tài khoản"));
+
+        btnAdd.setText("Thêm");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+
+        btnEdit.setText("Sửa");
+
+        btnClear.setText("Xóa");
+
+        btnExit.setText("Thoát");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(btnAdd)
+                .addGap(72, 72, 72)
+                .addComponent(btnEdit)
+                .addGap(67, 67, 67)
+                .addComponent(btnClear)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnExit)
+                .addGap(70, 70, 70))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdd)
+                    .addComponent(btnEdit)
+                    .addComponent(btnClear)
+                    .addComponent(btnExit))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Chi tiết"));
+
+        jLabel3.setText("Tên Tài Khoản");
+
+        jLabel4.setText("Password");
+
+        jLabel5.setText("Quyền Admin");
+
+        cbxAdmin.setBackground(new java.awt.Color(153, 204, 255));
+        cbxAdmin.setText("Admin");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(39, 39, 39)
+                        .addComponent(cbxAdmin))
+                    .addComponent(jLabel4)
+                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(79, 79, 79))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(cbxAdmin)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(170, 170, 170)
-                .addComponent(jLabel1)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 456, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(275, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        int exit = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát không?", "Thông báo", JOptionPane.YES_NO_OPTION);
+        if (exit == JOptionPane.YES_OPTION) {
+            dispose();
+        }
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void tbvAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbvAccountMouseClicked
+        // TODO add your handling code here:
+        String s[];
+        //s = tbvAccount.getSelectionModel().;
+        txtAccount.setText((String) tbvAccount.getValueAt(tbvAccount.getSelectedRow(),0));
+        txtPass.setText((String) tbvAccount.getValueAt(tbvAccount.getSelectedRow(),1));
+        if ((String) tbvAccount.getValueAt(tbvAccount.getSelectedRow(),2) == "admin"){
+            cbxAdmin.setSelected(true);
+        }else{
+            cbxAdmin.setSelected(false);
+        }
+    }//GEN-LAST:event_tbvAccountMouseClicked
+    public void setup(){
+        txtAccount.setText("");
+        txtPass.setText("");
+        cbxAdmin.setSelected(false);
+    }
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        setup();
+        try {
+            TK.InsertTaiKhoan(txtAccount.getText(), txtPass.getText(), cbxAdmin.isSelected());
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(frmQLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            QLAccount();
+        } catch (SQLException ex) {
+            Logger.getLogger(frmQLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
 
     /**
      * @param args the command line arguments
@@ -83,12 +307,30 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmQLTaiKhoan().setVisible(true);
+                try {
+                    new frmQLTaiKhoan().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmQLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnExit;
+    private javax.swing.JCheckBox cbxAdmin;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbvAccount;
+    private javax.swing.JTextField txtAccount;
+    private javax.swing.JTextField txtPass;
     // End of variables declaration//GEN-END:variables
 }
