@@ -1,11 +1,19 @@
 
 package myclass;
 
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class HoaDon {
     Connect con = new Connect();
@@ -29,4 +37,36 @@ public class HoaDon {
         }
         return -1;
     }
+
+    public void printInVoice(int invoiceid) throws SQLException {
+        try {
+            con.connectSQL();
+            ResultSet res = con.LoadData("Select * From ThongTinNhaHang");
+            String sName="",sLoc="",sPhone1="",sPhone2="",sEmail="";
+            while(res.next())
+            {
+                sName=res.getString(1);
+                sLoc=res.getString(2);
+                sPhone1=res.getString(3);
+                sPhone2=res.getString(4);
+                sEmail=res.getString(5);
+            }
+            String reportName = "report/inVoice.jasper";
+            HashMap map = new HashMap();
+            map.put("hdId",invoiceid);
+            map.put("shopName",sName);
+            map.put("shopLoc",sLoc);
+            map.put("shopEmail",sEmail);
+            map.put("shopPhone1",sPhone1);
+            map.put("shopPhone2",sPhone2);
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream(reportName);
+            JasperPrint jp = JasperFillManager.fillReport(is,map,con.getCon());
+            JasperViewer jv = new JasperViewer(jp,false);
+            jv.setVisible(true);
+        } catch (JRException ex) {
+            Logger.getLogger(HoaDon.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDon.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ }
 }

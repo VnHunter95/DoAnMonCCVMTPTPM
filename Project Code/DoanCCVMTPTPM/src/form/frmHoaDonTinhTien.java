@@ -10,8 +10,11 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.input.KeyCode;
@@ -542,6 +545,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
             }
             hdtam.deleteHD_TamByTable(tableid);
             loadHD_TamData();
+            hd.printInVoice(invoiceid);
         } catch (SQLException ex) {
             Logger.getLogger(frmHoaDonTinhTien.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -696,7 +700,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                         String product_id = (String) e.getItem();
                         Product selected_product = comboProductModel.getElementAt(comboProduct_id.getSelectedIndex());
                         jTxtProduct_name.setText(selected_product.getName());
-                        jTxtProduct_price.setText(String.valueOf(selected_product.getPrice()));
+                        jTxtProduct_price.setText(String.format("%,.0f",selected_product.getPrice()));
                         jTxtProduct_type.setText(selected_product.getType());
                         jSpinnerQuanity.setValue(1);
                     }
@@ -736,7 +740,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                        jSpinerPercent.setEnabled(false);
                        jSpinerPercent.setValue(0);
                        double discount = 10 * (Double.valueOf(jtxtTotalPrice.getText())+Double.valueOf(jTxtTax.getText())) / 100;
-                       jTxtDiscount.setText(String.valueOf(discount));
+                       jTxtDiscount.setText(String.format("%,.0f",discount));
                        calculatePayment();
                    }
                 }
@@ -748,7 +752,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                    {
                        jSpinerPercent.setEnabled(false);
                        jSpinerPercent.setValue(0);
-                       jTxtDiscount.setText(String.valueOf((double) 130000));
+                       jTxtDiscount.setText(String.format("%,.0f",(double) 130000));
                        calculatePayment();
                    }
                 }
@@ -773,7 +777,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                 public void stateChanged(ChangeEvent e) {
                      int percent = (int) jSpinerPercent.getValue();
                      double discount = percent * (Double.valueOf(jtxtTotalPrice.getText())+Double.valueOf(jTxtTax.getText())) / 100;
-                     jTxtDiscount.setText(String.valueOf(discount));
+                     jTxtDiscount.setText(String.format("%,.0f",discount));
                      calculatePayment();
                 }
             });
@@ -803,15 +807,16 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
     }
     public void calculatePayment()
     {
-        double discount = Double.valueOf(jTxtDiscount.getText());
-        double total = Double.valueOf(jtxtTotalPrice.getText());
-        double tax = Double.valueOf(jTxtTax.getText());
+        double discount = Double.valueOf(jTxtDiscount.getText().replace(",", ""));
+        String test = jtxtTotalPrice.getText().replace(",", "");
+        double total = Double.valueOf(jtxtTotalPrice.getText().replace(",", ""));
+        double tax = Double.valueOf(jTxtTax.getText().replace(",", ""));
         double payment = total + tax - discount;
         if(payment<0)
         {
             payment=0;
         }
-        jTxtPayment.setText(String.valueOf(payment));
+        jTxtPayment.setText(String.format("%,.0f",payment));
     }
     
     public void loadHD_TamData()
@@ -836,8 +841,8 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                                HD_TamModel.addRow(rows);
                            }
                            tax = 10*total/100;
-                           jtxtTotalPrice.setText(String.valueOf(total));
-                           jTxtTax.setText(String.valueOf(tax));
+                           jtxtTotalPrice.setText(String.format("%,.0f",total));
+                           jTxtTax.setText(String.format("%,.0f",tax));
                            if(!jRBNoDiscount.isSelected())
                            {
                                jRBNoDiscount.setSelected(true);
