@@ -9,7 +9,7 @@ import java.sql.*;
 
 /**
  *
- * @author Hunter95
+ * @author dragonfist31
  */
 public class Ban {
 

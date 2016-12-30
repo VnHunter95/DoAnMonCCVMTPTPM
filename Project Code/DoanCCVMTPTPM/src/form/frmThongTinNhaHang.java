@@ -15,14 +15,15 @@ import myclass.ThongTinNhaHang;
 
 /**
  *
- * @author Hunter95
+ * @author dragonfist31
  */
 public class frmThongTinNhaHang extends javax.swing.JFrame {
 
     private ThongTinNhaHang info;
     ResultSet result = null;
     private final DefaultTableModel model = new DefaultTableModel();
-    private boolean cothem=true;
+    private boolean cothem = false;
+
     /**
      * Creates new form frmThongTinNhaHang
      */
@@ -35,15 +36,16 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(frmThongTinNhaHang.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
 
     }
-    private void effect(boolean a){
+
+    private void effect(boolean a) {
         txtTenNH.setEnabled(!a);
         txtDiaChi.setEnabled(!a);
         txtDT1.setEnabled(!a);
         txtDT2.setEnabled(!a);
         txtEmail.setEnabled(!a);
+        btnLuu.setEnabled(!a);
     }
 
     private void ClearData() {
@@ -56,7 +58,7 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
     private void ShowData() throws SQLException {
         ResultSet res = info.LoadInfoData();
         try {
-            
+
             ClearData();
             while (res.next()) {
                 String rows[] = new String[5];
@@ -69,6 +71,15 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
         }
+    }
+
+    private boolean isNumber(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) < '0' || s.charAt(i) > '9') {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -92,8 +103,8 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         txtDT1 = new javax.swing.JTextField();
         txtDT2 = new javax.swing.JTextField();
-        txtSua = new javax.swing.JButton();
-        txtLuu = new javax.swing.JButton();
+        btnSua = new javax.swing.JButton();
+        btnLuu = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -112,17 +123,17 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
 
         jLabel6.setText("Số điện thoại 2:");
 
-        txtSua.setText("Sửa");
-        txtSua.addActionListener(new java.awt.event.ActionListener() {
+        btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSuaActionPerformed(evt);
+                btnSuaActionPerformed(evt);
             }
         });
 
-        txtLuu.setText("Lưu");
-        txtLuu.addActionListener(new java.awt.event.ActionListener() {
+        btnLuu.setText("Lưu");
+        btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLuuActionPerformed(evt);
+                btnLuuActionPerformed(evt);
             }
         });
 
@@ -147,13 +158,13 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtDT1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtSua, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))))
+                                .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDT2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtLuu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnLuu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -175,12 +186,13 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtDT1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSua))
+                    .addComponent(btnSua))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtDT2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtLuu))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(txtDT2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -217,42 +229,50 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSuaActionPerformed
-        effect(false);
-    }//GEN-LAST:event_txtSuaActionPerformed
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        if (btnSua.getText() == "Sửa") {
+            effect(false);
+            btnSua.setText("Hủy");
+        } else if (btnSua.getText() == "Hủy") {
+            effect(true);
+            btnSua.setText("Sửa");
+        }
 
-    private void txtLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLuuActionPerformed
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         String ten = txtTenNH.getText();
         String dc = txtDiaChi.getText();
+        String Email = txtEmail.getText();
         String dt1 = txtDT1.getText();
         String dt2 = txtDT2.getText();
-        String Email = txtEmail.getText();
+        boolean k = isNumber(dt1);
+        boolean h = isNumber(dt1);
         if (ten.length() == 0 || dc.length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ Tên nhà hàng và Địa Chỉ",
-                            "Thông báo", 1);
-                    return;
-                } else if (ten.length() > 30 || dc.length() > 50) {
-                    JOptionPane.showMessageDialog(null, "Tên nhà hàng chỉ 30 ký tự, Khu vực 150 ký tự",
-                            "Thông báo", 1);
-                    return;
-                } else {
-                    try {
-                        if (cothem == true) //Luu cho tthem moi
-                        {
-                            info.InsertInfo(ten, dc, dt1, dt2, Email);
-                        } else //Luu cho sua
-                        {
-                            info.EditInfo(ten, dc, dt1, dt2, Email);
-                        }
-                        ClearData(); //goi ham xoa du lieu tron tableModel
-                        ShowData(); //Do lai du lieu vao Table Model
-                        effect(true);
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Cap nhat that bai",
-                                "Thong bao", 1);
-                    }
-                }
-    }//GEN-LAST:event_txtLuuActionPerformed
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ Tên nhà hàng và Địa Chỉ!",
+                    "Thông báo", 1);
+            return;
+        } else if (ten.length() > 30 || dc.length() > 50) {
+            JOptionPane.showMessageDialog(null, "Tên nhà hàng chỉ 30 ký tự, Khu vực 50 ký tự!",
+                    "Thông báo", 1);
+            return;
+        } else if (k == false || h == false) {
+            JOptionPane.showMessageDialog(null, "Chỉ được nhập số ở mục điện thoại!",
+                    "Thông báo", 1);
+        } else {
+            try {
+                info.EditInfo(ten, dc, dt1, dt2, Email);
+                ClearData(); //goi ham xoa du lieu tron tableModel
+                ShowData(); //Do lai du lieu vao Table Model
+                effect(true);
+                btnSua.setText("Sửa");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Cap nhat that bai",
+                        "Thong bao", 1);
+            }
+
+        }
+    }//GEN-LAST:event_btnLuuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -290,6 +310,8 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLuu;
+    private javax.swing.JButton btnSua;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -302,8 +324,6 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
     private javax.swing.JTextField txtDT2;
     private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JButton txtLuu;
-    private javax.swing.JButton txtSua;
     private javax.swing.JTextField txtTenNH;
     // End of variables declaration//GEN-END:variables
 }

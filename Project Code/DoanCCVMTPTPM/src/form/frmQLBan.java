@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import myclass.Ban;
@@ -16,7 +18,7 @@ import myclass.HoaDon;
 
 /**
  *
- * @author Hunter95
+ * @author dragonfist31
  */
 public class frmQLBan extends javax.swing.JFrame {
 
@@ -346,7 +348,12 @@ public class frmQLBan extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btnXoaActionPerformed
-
+    private boolean isChar(String s){
+        Pattern n = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
+        Matcher m = n.matcher(s);
+        boolean b= m.find();
+        return b;
+    }
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         int exit = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát không?", "Thông báo", JOptionPane.YES_NO_OPTION);
         if (exit == JOptionPane.YES_OPTION) {
@@ -358,6 +365,7 @@ public class frmQLBan extends javax.swing.JFrame {
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         String ma = txtMaBan.getText();
         String kv = txtKhuVuc.getText();
+        boolean k = isChar(ma);
 
         try {
             result = ban.LoadAllBanData();
@@ -368,14 +376,18 @@ public class frmQLBan extends javax.swing.JFrame {
                             "Thông báo", 1);
                     return;
                 } else if (ma.length() == 0 || kv.length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ Mã bàn và Khu vực",
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ Mã bàn và Khu vực!",
                             "Thông báo", 1);
                     return;
                 } else if (ma.length() > 3 || kv.length() > 10) {
-                    JOptionPane.showMessageDialog(null, "Mã bàn chỉ 3 ký tự, Khu vực 10 ký tự",
+                    JOptionPane.showMessageDialog(null, "Mã bàn chỉ 3 ký tự, Khu vực 10 ký tự!",
                             "Thông báo", 1);
                     return;
-                } else {
+                }else if (k == true) {
+                    JOptionPane.showMessageDialog(null, "Không được nhập ký tự đặc biệt ở mã bàn!",
+                            "Thông báo", 1);
+                    return; 
+                }else {
                     try {
                         if (cothem == true) //Luu cho tthem moi
                         {
