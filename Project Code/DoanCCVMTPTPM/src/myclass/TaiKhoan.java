@@ -31,8 +31,8 @@ public class TaiKhoan {
         String passworld = "123456";
         String url = "jdbc:sqlserver://localhost:1433;databaseName=QLNH;";
         conn = java.sql.DriverManager.getConnection(url, userName, passworld);
-        String sql = "SELECT * FROM TaiKhoan WHERE Username ='" + user + "' and Password ='" + pass + "'";
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM TaiKhoan WHERE Username =? and Password =?");
+        String sql = "SELECT * FROM TaiKhoan WHERE Username ='" + user + "' COLLATE SQL_Latin1_General_CP1_CS_AS and Password ='" + pass + "' COLLATE SQL_Latin1_General_CP1_CS_AS";
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM TaiKhoan WHERE Username =? COLLATE SQL_Latin1_General_CP1_CS_AS and Password =? COLLATE SQL_Latin1_General_CP1_CS_AS");
         ps.setString(1, user);
         ps.setString(2, pass);
         ResultSet rs = ps.executeQuery();

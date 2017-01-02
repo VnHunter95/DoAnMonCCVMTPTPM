@@ -135,8 +135,8 @@ public class frmDangNhap extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThoatActionPerformed
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        String taiKhoan = edtTaiKhoan.getText();
-        String matKhau = edtMatKhau.getText();
+        String taiKhoan = edtTaiKhoan.getText().trim();
+        String matKhau = edtMatKhau.getText().trim();
 
         Pattern p = Pattern.compile("[^A-Za-z0-9]");
         Matcher m = p.matcher(taiKhoan);
