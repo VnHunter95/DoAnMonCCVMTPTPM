@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import myclass.ThongTinNhaHang;
@@ -80,6 +82,12 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
             }
         }
         return true;
+    }
+    private boolean isChar(String s){
+        Pattern n = Pattern.compile("[^a-z0-9@.]", Pattern.CASE_INSENSITIVE);
+        Matcher m = n.matcher(s);
+        boolean b= m.find();
+        return b;
     }
 
     /**
@@ -254,6 +262,7 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
         String dt2 = txtDT2.getText();
         boolean k = isNumber(dt1);
         boolean h = isNumber(dt1);
+        boolean l = isChar(Email);
         if (ten.length() == 0 || dc.length() == 0) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ Tên nhà hàng và Địa Chỉ!",
                     "Thông báo", 1);
@@ -268,7 +277,10 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
         } else if (dt1.length()<10 || dt1.length() > 11 || dt2.length()<10 || dt2.length() > 11) {
             JOptionPane.showMessageDialog(null, "Số điện thoại bao gồm 10 đến 11 số! Vui lòng nhập lại",
                     "Thông báo", 1);
-        } else {
+        } else if (l == true) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập địa chỉ Email hợp lệ!",
+                    "Thông báo", 1);
+        }else {
             try {
                 info.EditInfo(ten, dc, dt1, dt2, Email);
                 ClearData(); 
