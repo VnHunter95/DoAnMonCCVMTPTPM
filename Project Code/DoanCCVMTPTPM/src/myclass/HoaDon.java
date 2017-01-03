@@ -28,6 +28,11 @@ public class HoaDon {
         con.connectSQL();
         con.UpdateData("INSERT INTO CT_HD(SoHD,IDMH,DonGia,SoLuong,ThanhTien) Values("+invoiceid+",'"+productid+"',"+price+","+quanity+","+price*quanity+")");
     }
+    public ResultSet getListHD() throws SQLException
+    {
+        con.connectSQL();
+        return con.LoadData("SELECT * FROM HoaDon");
+    }
     public int getLatestId() throws SQLException
     {
         ResultSet res = con.LoadData("SELECT IDENT_CURRENT ('HoaDon') as [ID]");
