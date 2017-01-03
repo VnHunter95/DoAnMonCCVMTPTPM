@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import myclass.ThongTinNhaHang;
@@ -81,6 +83,12 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
         }
         return true;
     }
+    private boolean isChar(String s){
+        Pattern n = Pattern.compile("[^a-z0-9@.]", Pattern.CASE_INSENSITIVE);
+        Matcher m = n.matcher(s);
+        boolean b= m.find();
+        return b;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,9 +117,9 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("VNI-Diudang", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
-        jLabel1.setText("Thoâng tin nhaø haøng");
+        jLabel1.setText("Thông tin nhà hàng");
 
         jLabel2.setText("Tên nhà hàng:");
 
@@ -234,6 +242,12 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
             effect(false);
             btnSua.setText("Hủy");
         } else if (btnSua.getText() == "Hủy") {
+            ClearData();
+            try { 
+                ShowData();
+            } catch (SQLException ex) {
+                Logger.getLogger(frmThongTinNhaHang.class.getName()).log(Level.SEVERE, null, ex);
+            }
             effect(true);
             btnSua.setText("Sửa");
         }
@@ -248,6 +262,7 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
         String dt2 = txtDT2.getText();
         boolean k = isNumber(dt1);
         boolean h = isNumber(dt1);
+        boolean l = isChar(Email);
         if (ten.length() == 0 || dc.length() == 0) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ Tên nhà hàng và Địa Chỉ!",
                     "Thông báo", 1);
@@ -259,11 +274,17 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
         } else if (k == false || h == false) {
             JOptionPane.showMessageDialog(null, "Chỉ được nhập số ở mục điện thoại!",
                     "Thông báo", 1);
-        } else {
+        } else if (dt1.length()<10 || dt1.length() > 11 || dt2.length()<10 || dt2.length() > 11) {
+            JOptionPane.showMessageDialog(null, "Số điện thoại bao gồm 10 đến 11 số! Vui lòng nhập lại",
+                    "Thông báo", 1);
+        } else if (l == true) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập địa chỉ Email hợp lệ!",
+                    "Thông báo", 1);
+        }else {
             try {
                 info.EditInfo(ten, dc, dt1, dt2, Email);
-                ClearData(); //goi ham xoa du lieu tron tableModel
-                ShowData(); //Do lai du lieu vao Table Model
+                ClearData(); 
+                ShowData(); 
                 effect(true);
                 btnSua.setText("Sửa");
             } catch (SQLException ex) {

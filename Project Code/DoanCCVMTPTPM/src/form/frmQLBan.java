@@ -36,7 +36,11 @@ public class frmQLBan extends javax.swing.JFrame {
         String[] colsName = {"Mã bàn", "Khu vực"};
         model.setColumnIdentifiers(colsName);
         jtableban.setModel(model);
-        ShowDataTable();
+        try {
+            ShowDataTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(frmQLBan.class.getName()).log(Level.SEVERE, null, ex);
+        }
         setNull();
         //Goi ham Khoa cac TextField 
         setKhoa(true);
@@ -98,9 +102,9 @@ public class frmQLBan extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("VNI-Disney", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
-        jLabel1.setText("DANH SAÙCH BAØN");
+        jLabel1.setText("Danh sách Bàn");
 
         jLabel2.setText("~Table Manager~");
 
@@ -396,8 +400,8 @@ public class frmQLBan extends javax.swing.JFrame {
                         {
                             ban.EditBan(ma, kv);
                         }
-                        ClearData(); //goi ham xoa du lieu tron tableModel
-                        ShowDataTable(); //Do lai du lieu vao Table Model
+                        ClearData(); 
+                        ShowDataTable(); 
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(null, "Cap nhat that bai",
                                 "Thong bao", 1);
@@ -495,19 +499,17 @@ public class frmQLBan extends javax.swing.JFrame {
     private javax.swing.JTextField txtMaBan;
     // End of variables declaration//GEN-END:variables
 
-    private void ShowDataTable() {
-        ResultSet res = null;
+    private final void ShowDataTable() throws SQLException{
+        result = ban.LoadAllBanData();
         try {
-            res = ban.LoadAllBanData();
             ClearData();
-            while (res.next()) {
-                String rows[] = new String[2];
-                rows[0] = res.getString(1);
-                rows[1] = res.getString(2);
+            while (result.next()) {
+                String rows[] = new String[3];
+                rows[0] = result.getString(1);
+                rows[1] = result.getString(2);
                 model.addRow(rows);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
