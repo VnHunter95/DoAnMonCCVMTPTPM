@@ -33,6 +33,16 @@ public class HoaDon {
         con.connectSQL();
         return con.LoadData("SELECT * FROM HoaDon");
     }
+    public ResultSet getPriceofDay(int day, int month, int year) throws SQLException
+    {
+        con.connectSQL();
+        return con.LoadData("SELECT * from HoaDon hd where DAY(hd.NgayLap) = " + day + " and MONTH(hd.NgayLap) = " + month + " and YEAR(hd.NgayLap) = " + year + "");
+    }
+    public ResultSet getSumPrice(int day, int month, int year) throws SQLException{
+         con.connectSQL();
+        ResultSet res = con.LoadData("SELECT Sum(hd.ThanhTien) from HoaDon hd where DAY(hd.NgayLap) = " + day + " and MONTH(hd.NgayLap) = " + month + " and YEAR(hd.NgayLap) = " + year + "");
+        return res;
+    }
     public int getLatestId() throws SQLException
     {
         ResultSet res = con.LoadData("SELECT IDENT_CURRENT ('HoaDon') as [ID]");
