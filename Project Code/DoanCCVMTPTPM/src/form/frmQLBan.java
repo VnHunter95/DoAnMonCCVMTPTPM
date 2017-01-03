@@ -53,6 +53,7 @@ public class frmQLBan extends javax.swing.JFrame {
         btnThem.setEnabled(a);
         btnXoa.setEnabled(a);
         btnSua.setEnabled(a);
+        btnLamMoi.setEnabled(!a);
         btnLuu.setEnabled(!a);
         btnThoat.setEnabled(a);
         btnHuy.setEnabled(!a);
@@ -420,12 +421,23 @@ public class frmQLBan extends javax.swing.JFrame {
         setNull();
         setKhoa(true);
         setButton(true);
+        try {
+            //Lay chi so dong dang chon 
+            int row = jtableban.getSelectedRow();
+            String ma = (jtableban.getModel().getValueAt(row, 0)).toString();
+            ResultSet rs = ban.LoadBanById(ma);//Goi ham lay du lieu theo ma loai 
+            if (rs.next())//Neu co du lieu 
+            {
+                txtMaBan.setText(rs.getString("IDBan"));
+                txtKhuVuc.setText(rs.getString("KhuVuc"));
+            }
+        } catch (SQLException e) {
+        }
     }//GEN-LAST:event_btnHuyActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         txtMaBan.setText(null);
         txtKhuVuc.setText(null);
-        setButton(true);
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void jtablebanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtablebanMouseClicked

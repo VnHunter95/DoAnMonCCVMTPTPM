@@ -116,6 +116,7 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
@@ -268,10 +269,14 @@ public class frmThongTinNhaHang extends javax.swing.JFrame {
                     "Thông báo", 1);
             return;
         } else if (ten.length() > 30 || dc.length() > 50) {
-            JOptionPane.showMessageDialog(null, "Tên nhà hàng chỉ 30 ký tự, Khu vực 50 ký tự!",
+            JOptionPane.showMessageDialog(null, "Tên nhà hàng chỉ 30 ký tự, Địa chỉ 50 ký tự!",
                     "Thông báo", 1);
             return;
-        } else if (k == false || h == false) {
+        } else if (Email.length()>40) {
+            JOptionPane.showMessageDialog(null, "Địa chỉ email quá dài! Vui lòng chỉ nhập vừa đủ 40 ký tự!",
+                    "Thông báo", 1);
+            return;
+        }else if (k == false || h == false) {
             JOptionPane.showMessageDialog(null, "Chỉ được nhập số ở mục điện thoại!",
                     "Thông báo", 1);
         } else if (dt1.length()<10 || dt1.length() > 11 || dt2.length()<10 || dt2.length() > 11) {
