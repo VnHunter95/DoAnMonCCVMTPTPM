@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/PC/Desktop/da/DoAnMonCCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/form/frmQLBan.java</file>
             <file>file:/C:/Users/PC/Desktop/da/DoAnMonCCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/myclass/MatHang.java</file>
             <file>file:/C:/Users/PC/Desktop/da/DoAnMonCCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/myclass/HDTam.java</file>
@@ -13,6 +14,16 @@
             <file>file:/C:/Users/PC/Desktop/da/DoAnMonCCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/form/frmQLMatHang.java</file>
             <file>file:/C:/Users/PC/Desktop/da/DoAnMonCCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/myclass/Connect.java</file>
             <file>file:/C:/Users/PC/Desktop/da/DoAnMonCCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/doanccvmtptpm/DoanCCVMTPTPM.java</file>
+=======
+            <file>file:/D:/GitHut/Project%20CCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/form/frmHoaDonTinhTien.java</file>
+            <file>file:/D:/GitHut/Project%20CCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/form/frmQLMatHang.java</file>
+            <file>file:/D:/GitHut/Project%20CCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/myclass/Product.java</file>
+            <file>file:/D:/GitHut/Project%20CCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/myclass/HoaDon.java</file>
+            <file>file:/D:/GitHut/Project%20CCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/myclass/ThongTinNhaHang.java</file>
+            <file>file:/D:/GitHut/Project%20CCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/myclass/Connect.java</file>
+            <file>file:/D:/GitHut/Project%20CCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/doanccvmtptpm/DoanCCVMTPTPM.java</file>
+            <file>file:/D:/GitHut/Project%20CCVMTPTPM/Project%20Code/DoanCCVMTPTPM/src/form/frmDangNhap.java</file>
+>>>>>>> origin/master
         </group>
     </open-files>
 </project-private>
