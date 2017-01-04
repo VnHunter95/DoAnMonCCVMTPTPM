@@ -529,10 +529,10 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                 return;
             }
             HoaDon hd = new HoaDon();
-            double total = Double.valueOf(jtxtTotalPrice.getText());
-            double discount = Double.valueOf(jTxtDiscount.getText());
-            double payment = Double.valueOf(jTxtPayment.getText());
-            double tax = Double.valueOf(jTxtTax.getText());
+            double total = Double.valueOf(jtxtTotalPrice.getText().replace(",",""));
+            double discount = Double.valueOf(jTxtDiscount.getText().replace(",",""));
+            double payment = Double.valueOf(jTxtPayment.getText().replace(",",""));
+            double tax = Double.valueOf(jTxtTax.getText().replace(",",""));
             String tableid = comboTable.getSelectedItem().toString();
             hd.insertHoaDon(total, discount, tax, payment, tableid);
             int invoiceid = hd.getLatestId();
@@ -739,7 +739,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                    {
                        jSpinerPercent.setEnabled(false);
                        jSpinerPercent.setValue(0);
-                       double discount = 10 * (Double.valueOf(jtxtTotalPrice.getText())+Double.valueOf(jTxtTax.getText())) / 100;
+                       double discount = 10 * (Double.valueOf(jtxtTotalPrice.getText().replace(",", ""))+Double.valueOf(jTxtTax.getText().replace(",", ""))) / 100;
                        jTxtDiscount.setText(String.format("%,.0f",discount));
                        calculatePayment();
                    }
