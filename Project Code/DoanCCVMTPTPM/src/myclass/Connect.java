@@ -4,6 +4,10 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 public class Connect {
     public Connection conn = null;
+    public Connection getCon()
+    {
+        return conn;
+    }
     public void connectSQL() throws SQLException{
         try{
             String userName = "sa";

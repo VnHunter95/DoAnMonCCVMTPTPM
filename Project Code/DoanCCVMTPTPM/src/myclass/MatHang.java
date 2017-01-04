@@ -30,9 +30,14 @@ public class MatHang {
          cn.UpdateData(sql);         
      }
      //Tự code InsertMatHang
-     public void InsertMatHang() throws SQLException{
+     public void InsertMatHang(String id,String mh,String dg,String loai) throws SQLException{
          cn.connectSQL();
-         String sql = "INSERT INTO MatHang Values()";                   
+         String sql = "INSERT INTO MatHang Values('"+id+"','"+mh+"',"+dg+",'"+loai+"')";                   
          cn.UpdateData(sql);         
      }  
+     public void EditMatHang(String mh,String dg,String loai) throws SQLException{
+         cn.connectSQL();
+         String sql ="Update MatHang set TenMH ='"+mh+"',DonGia="+dg+",Loai='"+loai+"' ";
+         cn.UpdateData(sql);
+     }
 }
