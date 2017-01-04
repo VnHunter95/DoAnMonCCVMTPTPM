@@ -482,7 +482,8 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
 
     private void jBtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtAddActionPerformed
         try {
-            hdtam.addProductToTable(comboTable.getSelectedItem().toString(),comboProduct_id.getSelectedItem().toString());
+            int quanity = Integer.valueOf(jSpinnerQuanity.getValue().toString());
+            hdtam.addProductToTable(comboTable.getSelectedItem().toString(),comboProduct_id.getSelectedItem().toString(),quanity);
             loadHD_TamData();
         } catch (SQLException ex) {
             Logger.getLogger(frmHoaDonTinhTien.class.getName()).log(Level.SEVERE, null, ex);
@@ -776,7 +777,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                 @Override
                 public void stateChanged(ChangeEvent e) {
                      int percent = (int) jSpinerPercent.getValue();
-                     double discount = percent * (Double.valueOf(jtxtTotalPrice.getText())+Double.valueOf(jTxtTax.getText())) / 100;
+                     double discount = percent * (Double.valueOf(jtxtTotalPrice.getText().replace(",", ""))+Double.valueOf(jTxtTax.getText().replace(",", ""))) / 100;
                      jTxtDiscount.setText(String.format("%,.0f",discount));
                      calculatePayment();
                 }
