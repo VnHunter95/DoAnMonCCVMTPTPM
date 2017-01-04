@@ -526,9 +526,6 @@ public class frmQLBan extends javax.swing.JFrame {
     }
 
     private void ClearData() {
-        int n = model.getRowCount() - 1;
-        for (int i = n; i >= 0; i--) {
-            model.removeRow(i);
-        }
+        model.setRowCount(0);
     }
 }
