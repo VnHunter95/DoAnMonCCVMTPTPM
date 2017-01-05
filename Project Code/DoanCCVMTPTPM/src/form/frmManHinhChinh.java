@@ -212,7 +212,7 @@ public class frmManHinhChinh extends javax.swing.JFrame {
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
        int exit = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát không?", "Thông báo", JOptionPane.YES_NO_OPTION);
         if (exit == JOptionPane.YES_OPTION) {
-            dispose();
+            System.exit(1);
         }
     }//GEN-LAST:event_btnThoatActionPerformed
 
