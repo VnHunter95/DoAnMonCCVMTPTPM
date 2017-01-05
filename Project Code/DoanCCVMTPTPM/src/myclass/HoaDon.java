@@ -28,6 +28,28 @@ public class HoaDon {
         con.connectSQL();
         con.UpdateData("INSERT INTO CT_HD(SoHD,IDMH,DonGia,SoLuong,ThanhTien) Values("+invoiceid+",'"+productid+"',"+price+","+quanity+","+price*quanity+")");
     }
+    public ResultSet getListHD() throws SQLException
+    {
+        con.connectSQL();
+        return con.LoadData("SELECT * FROM HoaDon");
+    }
+    public void xoaHd(int t) throws SQLException
+    {
+        con.connectSQL(); 
+        con.UpdateData("delete from CT_HD where SoHD='"+t+"'");
+        String sql = "delete from HoaDon where SoHD = "+t+"";
+        con.UpdateData(sql);
+    }
+    public ResultSet getPriceofDay(int day, int month, int year) throws SQLException
+    {
+        con.connectSQL();
+        return con.LoadData("SELECT * from HoaDon hd where DAY(hd.NgayLap) = " + day + " and MONTH(hd.NgayLap) = " + month + " and YEAR(hd.NgayLap) = " + year + "");
+    }
+    public ResultSet getSumPrice(int day, int month, int year) throws SQLException{
+         con.connectSQL();
+        ResultSet res = con.LoadData("SELECT Sum(hd.ThanhTien) from HoaDon hd where DAY(hd.NgayLap) = " + day + " and MONTH(hd.NgayLap) = " + month + " and YEAR(hd.NgayLap) = " + year + "");
+        return res;
+    }
     public int getLatestId() throws SQLException
     {
         ResultSet res = con.LoadData("SELECT IDENT_CURRENT ('HoaDon') as [ID]");
