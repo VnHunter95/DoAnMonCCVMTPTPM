@@ -10,12 +10,15 @@ package form;
  * @author Hunter95
  */
 public class frmManHinhChinh extends javax.swing.JFrame {
-
+    
+    String userName,CapDo;
     /**
      * Creates new form frmManHinhChinh
      */
     public frmManHinhChinh(String userName, String CapDo) {
         initComponents();
+        this.userName=userName;
+        this.CapDo=CapDo;
         edtUsername.setText("Tên Tài Khoản: "+userName);
         if (CapDo.equals(true)) {
             edtQuyen.setText("Quyền: admin");
@@ -46,7 +49,7 @@ public class frmManHinhChinh extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnQuanly = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -72,7 +75,12 @@ public class frmManHinhChinh extends javax.swing.JFrame {
 
         jButton3.setText("Doanh Thu");
 
-        jButton4.setText("Quản Lý ");
+        btnQuanly.setText("Quản Lý ");
+        btnQuanly.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuanlyActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Đăng xuất ");
 
@@ -110,7 +118,7 @@ public class frmManHinhChinh extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnQuanly, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -132,7 +140,7 @@ public class frmManHinhChinh extends javax.swing.JFrame {
                             .addComponent(jButton2))
                         .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton4)
+                            .addComponent(btnQuanly)
                             .addComponent(jButton3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -157,6 +165,11 @@ public class frmManHinhChinh extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnQuanlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanlyActionPerformed
+        this.hide();
+        new frmQuanLy(userName,CapDo).setVisible(true);
+    }//GEN-LAST:event_btnQuanlyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,12 +207,12 @@ public class frmManHinhChinh extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnQuanly;
     private javax.swing.JLabel edtQuyen;
     private javax.swing.JLabel edtUsername;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
