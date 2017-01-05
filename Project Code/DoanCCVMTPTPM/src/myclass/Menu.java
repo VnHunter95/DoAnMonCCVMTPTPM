@@ -12,7 +12,7 @@ import java.sql.SQLException;
 /**
  *
  * @author My PC
- */
+ */ 
 public class Menu {
     public Connect cn = new Connect();
     public Connection conn = null;
@@ -26,9 +26,9 @@ public class Menu {
         String sql = "SELECT * FROM MatHang WHERE TenMH like '%" + user + "%'";
         return cn.LoadData(sql);
     }
-    public ResultSet LoadTheogia(String user) throws SQLException {
+    public ResultSet LoadTheogia(String a,String b) throws SQLException {
         cn.connectSQL();
-        String sql = "SELECT * FROM MatHang WHERE DonGia like '%" + user + "%'";
+        String sql = "SELECT * FROM MatHang WHERE DonGia between '" + a +"' and '" + b +"'";
         return cn.LoadData(sql);
     }
 }
