@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import myclass.MatHang;
@@ -117,6 +119,12 @@ public class frmQLMatHang extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Chi tiet mat hang"));
 
         jLabel2.setText("id");
+
+        jTextFieldID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldIDActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Loai");
 
@@ -366,16 +374,29 @@ public class frmQLMatHang extends javax.swing.JFrame {
         // TODO add your handling code here:
         String ml = jTextFieldID.getText();
         String tl = jTextFieldTenMon.getText();
+        Pattern p = Pattern.compile("[^A-Za-z0-9]");
+         Matcher m = p.matcher(ml);
+        Matcher m1 = p.matcher(tl);
+        boolean b = m.find();
+        boolean b1 = m1.find();
         String dg = jTextFieldDonGia.getText();
         String l= jTextFieldLoai.getText();
+        Matcher m2=p.matcher(dg);
+        Matcher m3=p.matcher(l);
+        boolean b2=m2.find();
+        boolean b3=m3.find();
         if (ml.length() == 0 || tl.length() == 0) {
             JOptionPane.showMessageDialog(null,
                     "Vui long nhap Ma loai va ten loai", "Thong bao", 1);
         } else {
             if (ml.length() > 6 || tl.length() > 30) {
-                JOptionPane.showMessageDialog(null,
-                        "Ma loai chi 6 ky tu, ten loai la 30", "Thong bao", 1);
-            } else {
+                JOptionPane.showMessageDialog(null,"Ma loai chi 6 ky tu, ten loai la 30", "Thong bao", 1);
+            } else if (b == true || b1 == true||b2==true||b3==true) {
+                JOptionPane.showMessageDialog(null, "Tài khoản và mật khẩu có chứa ký tự đặc biệt","Thông báo", 1);
+                
+            }
+            
+            else {
                 try {
                     if (cothem == true) //Luu cho tthem moi
                     {
@@ -403,6 +424,10 @@ public class frmQLMatHang extends javax.swing.JFrame {
         setKhoa(false);
         setButton(false);
     }//GEN-LAST:event_jButtonKoLuuActionPerformed
+
+    private void jTextFieldIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldIDActionPerformed
 
     /**
      * @param args the command line arguments
