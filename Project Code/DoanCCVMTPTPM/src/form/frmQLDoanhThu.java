@@ -111,8 +111,18 @@ public class frmQLDoanhThu extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable_hoadon);
 
         jButton_in.setText("In");
+        jButton_in.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_inActionPerformed(evt);
+            }
+        });
 
         jButton_xoa.setText("Xóa");
+        jButton_xoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_xoaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -276,6 +286,30 @@ public class frmQLDoanhThu extends javax.swing.JFrame {
             Logger.getLogger(frmQLDoanhThu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton_xuatdoanhthuActionPerformed
+
+    private void jButton_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_xoaActionPerformed
+        // TODO add your handling code here:
+        int t = jTable_hoadon.getSelectedRow();
+         if(t==-1)
+         {
+             JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn cần xoá");
+             return ;
+         }
+         int soHD = Integer.parseInt(tableModel.getValueAt(t, 0).toString());
+         
+        try {
+            hd.xoaHd(soHD);
+            tableModel.removeRow(t);
+            JOptionPane.showMessageDialog(null, "Xoá thành công");
+        } catch (SQLException ex) {
+            Logger.getLogger(frmQLDoanhThu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton_xoaActionPerformed
+
+    private void jButton_inActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_inActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Vui lòng kết nối với máy in");
+    }//GEN-LAST:event_jButton_inActionPerformed
     public final void ShowData_DoanhThuNgay() throws SQLException {         
         ResultSet result=null;  
         ResultSet price = null;

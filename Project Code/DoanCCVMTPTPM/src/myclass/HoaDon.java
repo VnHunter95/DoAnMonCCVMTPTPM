@@ -33,6 +33,13 @@ public class HoaDon {
         con.connectSQL();
         return con.LoadData("SELECT * FROM HoaDon");
     }
+    public void xoaHd(int t) throws SQLException
+    {
+        con.connectSQL(); 
+        con.UpdateData("delete from CT_HD where SoHD='"+t+"'");
+        String sql = "delete from HoaDon where SoHD = "+t+"";
+        con.UpdateData(sql);
+    }
     public ResultSet getPriceofDay(int day, int month, int year) throws SQLException
     {
         con.connectSQL();
