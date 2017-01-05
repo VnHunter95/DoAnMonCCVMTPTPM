@@ -5,30 +5,43 @@
  */
 package form;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Hunter95
  */
 public class frmManHinhChinh extends javax.swing.JFrame {
+<<<<<<< HEAD
     
     String userName,CapDo;
     /**
      * Creates new form frmManHinhChinh
      */
+=======
+
+   static int quyen=0;
+>>>>>>> master
     public frmManHinhChinh(String userName, String CapDo) {
         initComponents();
         this.userName=userName;
         this.CapDo=CapDo;
         edtUsername.setText("Tên Tài Khoản: "+userName);
-        if (CapDo.equals(true)) {
+        if (CapDo.equals("1")) {
             edtQuyen.setText("Quyền: admin");
+            quyen =1;
+            
         } else {
             edtQuyen.setText("Quyền: user");
+            quyen=0;
         }
     }
 
     private frmManHinhChinh() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
 //    frmManHinhChinh(String userName) {
@@ -46,12 +59,21 @@ public class frmManHinhChinh extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         edtUsername = new javax.swing.JLabel();
         edtQuyen = new javax.swing.JLabel();
+<<<<<<< HEAD
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         btnQuanly = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+=======
+        btnMenu = new javax.swing.JButton();
+        btnHoaDonTinhTien = new javax.swing.JButton();
+        btnDoanhThu = new javax.swing.JButton();
+        btnQuanLy = new javax.swing.JButton();
+        btnDangXuat = new javax.swing.JButton();
+        btnThoat = new javax.swing.JButton();
+>>>>>>> master
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -64,30 +86,52 @@ public class frmManHinhChinh extends javax.swing.JFrame {
 
         edtQuyen.setText("Quyen");
 
-        jButton1.setText("Menu");
-
-        jButton2.setText("Hóa Đơn Tính Tiền ");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnMenu.setText("Menu");
+        btnMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnMenuActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Doanh Thu");
+        btnHoaDonTinhTien.setText("Hóa Đơn Tính Tiền ");
+        btnHoaDonTinhTien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHoaDonTinhTienActionPerformed(evt);
+            }
+        });
 
+        btnDoanhThu.setText("Doanh Thu");
+        btnDoanhThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoanhThuActionPerformed(evt);
+            }
+        });
+
+<<<<<<< HEAD
         btnQuanly.setText("Quản Lý ");
         btnQuanly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnQuanlyActionPerformed(evt);
+=======
+        btnQuanLy.setText("Quản Lý ");
+        btnQuanLy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuanLyActionPerformed(evt);
+>>>>>>> master
             }
         });
 
-        jButton5.setText("Đăng xuất ");
-
-        jButton6.setText("Thoát ");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnDangXuat.setText("Đăng xuất ");
+        btnDangXuat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnDangXuatActionPerformed(evt);
+            }
+        });
+
+        btnThoat.setText("Thoát ");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
             }
         });
 
@@ -112,14 +156,20 @@ public class frmManHinhChinh extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnDangXuat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                        .addComponent(btnDoanhThu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+<<<<<<< HEAD
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnQuanly, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+=======
+                    .addComponent(btnHoaDonTinhTien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnQuanLy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnThoat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+>>>>>>> master
                 .addGap(20, 20, 20))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -136,16 +186,21 @@ public class frmManHinhChinh extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))
+                            .addComponent(btnMenu)
+                            .addComponent(btnHoaDonTinhTien))
                         .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+<<<<<<< HEAD
                             .addComponent(btnQuanly)
                             .addComponent(jButton3))
+=======
+                            .addComponent(btnQuanLy)
+                            .addComponent(btnDoanhThu))
+>>>>>>> master
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton5)
-                            .addComponent(jButton6)))
+                            .addComponent(btnDangXuat)
+                            .addComponent(btnThoat)))
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -158,13 +213,53 @@ public class frmManHinhChinh extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void btnHoaDonTinhTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonTinhTienActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new frmHoaDonTinhTien().setVisible(true);
+        return;
+    }//GEN-LAST:event_btnHoaDonTinhTienActionPerformed
+
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+        new frmMenu().setVisible(true);
+        return;
+    }//GEN-LAST:event_btnMenuActionPerformed
+
+    private void btnDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        this.setVisible(false);
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    new frmDangNhap().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmManHinhChinh.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }//GEN-LAST:event_btnDangXuatActionPerformed
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+       int exit = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát không?", "Thông báo", JOptionPane.YES_NO_OPTION);
+        if (exit == JOptionPane.YES_OPTION) {
+            dispose();
+        }
+    }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void btnDoanhThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoanhThuActionPerformed
+         new frmDoanhThu().setVisible(true);
+        return;
+    }//GEN-LAST:event_btnDoanhThuActionPerformed
+
+    private void btnQuanLyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanLyActionPerformed
+
+        if(quyen==1){
+            new frmQuanLy().setVisible(true);
+        return;
+        }else
+            JOptionPane.showMessageDialog(null, "quyen admin moi co the truy cap!",
+                            "Thông báo", 1);
+    }//GEN-LAST:event_btnQuanLyActionPerformed
 
     private void btnQuanlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanlyActionPerformed
         this.hide();
@@ -207,6 +302,7 @@ public class frmManHinhChinh extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< HEAD
     private javax.swing.JButton btnQuanly;
     private javax.swing.JLabel edtQuyen;
     private javax.swing.JLabel edtUsername;
@@ -215,6 +311,16 @@ public class frmManHinhChinh extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+=======
+    private javax.swing.JButton btnDangXuat;
+    private javax.swing.JButton btnDoanhThu;
+    private javax.swing.JButton btnHoaDonTinhTien;
+    private javax.swing.JButton btnMenu;
+    private javax.swing.JButton btnQuanLy;
+    private javax.swing.JButton btnThoat;
+    private javax.swing.JLabel edtQuyen;
+    private javax.swing.JLabel edtUsername;
+>>>>>>> master
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
