@@ -92,8 +92,6 @@ public class HoaDon {
             jv.setVisible(true);
         } catch (JRException ex) {
             Logger.getLogger(HoaDon.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(HoaDon.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
  }
 }

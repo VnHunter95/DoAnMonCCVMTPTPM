@@ -167,7 +167,11 @@ public class frmQuanLy extends javax.swing.JFrame {
 
     private void btnAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountActionPerformed
         this.hide();
-        new frmQLTaiKhoan().setVisible(true);
+        try {
+            new frmQLTaiKhoan().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmQuanLy.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAccountActionPerformed
 
     private void btnBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanActionPerformed
