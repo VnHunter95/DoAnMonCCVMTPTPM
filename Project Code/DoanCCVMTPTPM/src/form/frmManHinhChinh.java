@@ -213,8 +213,12 @@ public class frmManHinhChinh extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThoatActionPerformed
 
     private void btnDoanhThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoanhThuActionPerformed
-         new frmDoanhThu().setVisible(true);
-        return;
+        try {
+            new frmQLDoanhThu().setVisible(true);
+            return;
+        } catch (SQLException ex) {
+            Logger.getLogger(frmManHinhChinh.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnDoanhThuActionPerformed
 
     private void btnQuanLyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanLyActionPerformed
