@@ -98,7 +98,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnBan">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Table Manage"/>
+        <Property name="text" type="java.lang.String" value="QL Ban"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBanActionPerformed"/>
@@ -114,7 +114,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnReturn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Return to Main"/>
+        <Property name="text" type="java.lang.String" value="Tro lai MH Chinh"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReturnActionPerformed"/>
@@ -122,7 +122,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAccount">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Account"/>
+        <Property name="text" type="java.lang.String" value="QL Tai Khoan"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAccountActionPerformed"/>
@@ -130,7 +130,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnReturn1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Restaurant Info"/>
+        <Property name="text" type="java.lang.String" value="TT Nha Hang"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReturn1ActionPerformed"/>
@@ -138,7 +138,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnReturn2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Product Manage"/>
+        <Property name="text" type="java.lang.String" value="QL Mat Hang"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReturn2ActionPerformed"/>

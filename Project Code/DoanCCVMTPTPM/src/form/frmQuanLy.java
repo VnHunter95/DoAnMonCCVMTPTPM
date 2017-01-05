@@ -61,7 +61,7 @@ public class frmQuanLy extends javax.swing.JFrame {
             }
         });
 
-        btnBan.setText("Table Manage");
+        btnBan.setText("QL Ban");
         btnBan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBanActionPerformed(evt);
@@ -75,28 +75,28 @@ public class frmQuanLy extends javax.swing.JFrame {
             }
         });
 
-        btnReturn.setText("Return to Main");
+        btnReturn.setText("Tro lai MH Chinh");
         btnReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReturnActionPerformed(evt);
             }
         });
 
-        btnAccount.setText("Account");
+        btnAccount.setText("QL Tai Khoan");
         btnAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAccountActionPerformed(evt);
             }
         });
 
-        btnReturn1.setText("Restaurant Info");
+        btnReturn1.setText("TT Nha Hang");
         btnReturn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReturn1ActionPerformed(evt);
             }
         });
 
-        btnReturn2.setText("Product Manage");
+        btnReturn2.setText("QL Mat Hang");
         btnReturn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReturn2ActionPerformed(evt);
