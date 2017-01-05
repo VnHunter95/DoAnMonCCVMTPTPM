@@ -9,11 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import myclass.Connect;
 import myclass.TaiKhoan;
-
 /**
  *
  * @author Hunter95
@@ -26,6 +27,9 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
      */
     ResultSet result = null;
     private final TaiKhoan TK = new TaiKhoan();
+    private boolean isInsert = false;
+    private boolean isEdit = false;
+    private boolean isDelete = false;
     public void QLAccount() throws SQLException{
         String []colsName = {"Tên tài khoản","Password","Là Admin"};
         tableModel.setColumnIdentifiers(colsName);
@@ -46,13 +50,24 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
                 tableModel.addRow(rows);
                 //tableModel.setValueAt(result.getBoolean(3), tableModel.getRowCount()-1, 3);
             }
-                
-            
         } catch (SQLException e) {
             e.printStackTrace();
        }
     }
-            
+    public boolean isContainSpecialCharacter(String s) {
+     Pattern p = Pattern.compile("[^A-Za-z0-9]");
+     Matcher m = p.matcher(s);
+    // boolean b = m.matches();
+     boolean b = m.find();
+     if (b == true){
+        System.out.println("There is a special character in my string ");
+        return true;
+     }
+     else{
+         System.out.println("There is no special char.");
+         return false;
+     }
+ } 
             
     
     public frmQLTaiKhoan() throws SQLException {
@@ -69,14 +84,10 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbvAccount = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        btnAdd = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
-        btnClear = new javax.swing.JButton();
-        btnExit = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtAccount = new javax.swing.JTextField();
@@ -84,6 +95,15 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         cbxAdmin = new javax.swing.JCheckBox();
+        jPanel1 = new javax.swing.JPanel();
+        btnAdd = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnNonSave = new javax.swing.JButton();
+
+        jButton1.setText("De");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản Lí Tài Khoản");
@@ -112,6 +132,20 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbvAccount);
 
+        jPanel2.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Chi tiết"));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setText("Tên Tài Khoản");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel4.setText("Password");
+
+        jLabel5.setText("Quyền Admin");
+
+        cbxAdmin.setBackground(new java.awt.Color(153, 204, 255));
+        cbxAdmin.setText("Admin");
+
         jPanel1.setBackground(new java.awt.Color(153, 204, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Quản lý tài khoản"));
 
@@ -133,20 +167,33 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
             }
         });
 
+        btnSave.setText("Lưu");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        btnNonSave.setText("Không Lưu");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(21, 21, 21)
                 .addComponent(btnAdd)
-                .addGap(72, 72, 72)
+                .addGap(27, 27, 27)
                 .addComponent(btnEdit)
-                .addGap(67, 67, 67)
+                .addGap(18, 18, 18)
                 .addComponent(btnClear)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
+                .addComponent(btnSave)
+                .addGap(18, 18, 18)
+                .addComponent(btnNonSave)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(btnExit)
-                .addGap(70, 70, 70))
+                .addGap(21, 21, 21))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,21 +203,11 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
                     .addComponent(btnAdd)
                     .addComponent(btnEdit)
                     .addComponent(btnClear)
-                    .addComponent(btnExit))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnExit)
+                    .addComponent(btnSave)
+                    .addComponent(btnNonSave))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
-
-        jPanel2.setBackground(new java.awt.Color(153, 204, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Chi tiết"));
-
-        jLabel3.setText("Tên Tài Khoản");
-
-        jLabel4.setText("Password");
-
-        jLabel5.setText("Quyền Admin");
-
-        cbxAdmin.setBackground(new java.awt.Color(153, 204, 255));
-        cbxAdmin.setText("Admin");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -188,6 +225,7 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(79, 79, 79))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,13 +234,15 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
                 .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(cbxAdmin)))
+                    .addComponent(cbxAdmin))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -212,26 +252,24 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(225, 225, 225)
                         .addComponent(jLabel2)
-                        .addGap(0, 456, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(4, 4, 4))
         );
 
         pack();
@@ -261,21 +299,54 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
         txtPass.setText("");
         cbxAdmin.setSelected(false);
     }
+    public void setupButton(boolean c){
+        //btnNonSave.isVisible() = true;
+        btnAdd.setEnabled(c);
+        btnClear.setEnabled(c);
+        btnEdit.setEnabled(c);
+        btnExit.setEnabled(c);
+        btnSave.setEnabled(!c);
+        btnNonSave.setEnabled(!c);
+    }
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
-        setup();
-        try {
-            TK.InsertTaiKhoan(txtAccount.getText(), txtPass.getText(), cbxAdmin.isSelected());
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(frmQLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            QLAccount();
-        } catch (SQLException ex) {
-            Logger.getLogger(frmQLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setupButton(false);
+        
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        String acc = txtAccount.getText();
+        String pass = txtPass.getText();
+        if (isContainSpecialCharacter(pass)){
+            JOptionPane.showConfirmDialog(null, "Bạn nhập lại password đi?", "Thông báo", JOptionPane.YES_NO_OPTION);
+            setup();
+        }
+        if (isContainSpecialCharacter(acc)){
+            JOptionPane.showConfirmDialog(null, "Bạn nhập lại tên tài khoản đi?", "Thông báo", JOptionPane.YES_NO_OPTION);
+            setup();
+        }
+        else{
+            
+            if(isInsert){
+                try {
+                    TK.InsertTaiKhoan(acc, pass, cbxAdmin.isSelected());
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmQLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(isEdit){
+            
+            }
+            if(isDelete){
+
+            }
+        }
+        
+            
+        
+        
+        
+            
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,7 +392,10 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnNonSave;
+    private javax.swing.JButton btnSave;
     private javax.swing.JCheckBox cbxAdmin;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
