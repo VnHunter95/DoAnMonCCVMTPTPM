@@ -37,11 +37,6 @@ public class HoaDon {
         }
         return -1;
     }
-    public ResultSet loadhoadontheoma(String ma) throws SQLException{
-         con.connectSQL();
-         String sql ="SELECT * FROM HOADON WHERE IDBan='"+ma+"'";
-         return con.LoadData(sql);
-    }
 
     public void printInVoice(int invoiceid) throws SQLException {
         try {

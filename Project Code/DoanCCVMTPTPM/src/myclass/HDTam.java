@@ -29,16 +29,16 @@ public class HDTam {
         con.connectSQL();
         con.UpdateData("Update HD_Tam Set SoLuong = " + String.valueOf(Quanity)+" Where IdBan like '"+tableid+"' and IDMH like '"+productid+"'");
     }
-    public void addProductToTable(String tableid,String productid,int quanity) throws SQLException
+    public void addProductToTable(String tableid,String productid) throws SQLException
     {
         con.connectSQL();
         ResultSet res = con.LoadData("Select SoLuong from HD_Tam Where IDBan like '"+tableid+"' and IDMH like '"+productid+"'");
         if(res.next())
         {
-            changeProductQuanity(tableid,productid,res.getInt(1)+quanity);
+            changeProductQuanity(tableid,productid,res.getInt(1)+1);
             return;
         }
-        con.UpdateData("Insert Into HD_Tam Values('"+tableid+"','"+productid+"',"+quanity+")");
+        con.UpdateData("Insert Into HD_Tam Values('"+tableid+"','"+productid+"',1)");
     }
     
 }

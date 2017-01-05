@@ -151,7 +151,6 @@ public class frmDangNhap extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Đăng nhập thành công!",
                             "Thông báo", 1);
                     this.hide();
-                    String r= result.getString("CapDo");
                     new frmManHinhChinh(result.getString("Username"),result.getString("CapDo")).setVisible(true);
                     new frmDangNhap().setVisible(false);
                     return;

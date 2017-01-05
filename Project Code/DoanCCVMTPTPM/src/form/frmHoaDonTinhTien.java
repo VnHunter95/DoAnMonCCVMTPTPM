@@ -118,7 +118,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setSize(new java.awt.Dimension(850, 550));
 
@@ -482,8 +482,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
 
     private void jBtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtAddActionPerformed
         try {
-            int quanity = Integer.valueOf(jSpinnerQuanity.getValue().toString());
-            hdtam.addProductToTable(comboTable.getSelectedItem().toString(),comboProduct_id.getSelectedItem().toString(),quanity);
+            hdtam.addProductToTable(comboTable.getSelectedItem().toString(),comboProduct_id.getSelectedItem().toString());
             loadHD_TamData();
         } catch (SQLException ex) {
             Logger.getLogger(frmHoaDonTinhTien.class.getName()).log(Level.SEVERE, null, ex);
@@ -530,10 +529,10 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                 return;
             }
             HoaDon hd = new HoaDon();
-            double total = Double.valueOf(jtxtTotalPrice.getText().replace(",",""));
-            double discount = Double.valueOf(jTxtDiscount.getText().replace(",",""));
-            double payment = Double.valueOf(jTxtPayment.getText().replace(",",""));
-            double tax = Double.valueOf(jTxtTax.getText().replace(",",""));
+            double total = Double.valueOf(jtxtTotalPrice.getText());
+            double discount = Double.valueOf(jTxtDiscount.getText());
+            double payment = Double.valueOf(jTxtPayment.getText());
+            double tax = Double.valueOf(jTxtTax.getText());
             String tableid = comboTable.getSelectedItem().toString();
             hd.insertHoaDon(total, discount, tax, payment, tableid);
             int invoiceid = hd.getLatestId();
@@ -740,7 +739,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                    {
                        jSpinerPercent.setEnabled(false);
                        jSpinerPercent.setValue(0);
-                       double discount = 10 * (Double.valueOf(jtxtTotalPrice.getText().replace(",", ""))+Double.valueOf(jTxtTax.getText().replace(",", ""))) / 100;
+                       double discount = 10 * (Double.valueOf(jtxtTotalPrice.getText())+Double.valueOf(jTxtTax.getText())) / 100;
                        jTxtDiscount.setText(String.format("%,.0f",discount));
                        calculatePayment();
                    }
@@ -777,7 +776,7 @@ public class frmHoaDonTinhTien extends javax.swing.JFrame {
                 @Override
                 public void stateChanged(ChangeEvent e) {
                      int percent = (int) jSpinerPercent.getValue();
-                     double discount = percent * (Double.valueOf(jtxtTotalPrice.getText().replace(",", ""))+Double.valueOf(jTxtTax.getText().replace(",", ""))) / 100;
+                     double discount = percent * (Double.valueOf(jtxtTotalPrice.getText())+Double.valueOf(jTxtTax.getText())) / 100;
                      jTxtDiscount.setText(String.format("%,.0f",discount));
                      calculatePayment();
                 }
