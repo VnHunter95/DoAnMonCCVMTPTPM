@@ -186,7 +186,11 @@ public class frmManHinhChinh extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHoaDonTinhTienActionPerformed
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
-        new frmMenu().setVisible(true);
+        try {
+            new frmMenu().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmManHinhChinh.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return;
     }//GEN-LAST:event_btnMenuActionPerformed
 
