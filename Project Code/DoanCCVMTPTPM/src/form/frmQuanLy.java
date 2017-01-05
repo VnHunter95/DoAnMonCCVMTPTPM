@@ -50,13 +50,8 @@ public class frmQuanLy extends javax.swing.JFrame {
         btnAccount = new javax.swing.JButton();
         btnReturn1 = new javax.swing.JButton();
         btnReturn2 = new javax.swing.JButton();
-
-<<<<<<< HEAD
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Manager");
-=======
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
->>>>>>> master
+        setTitle("Manager");
 
         jButton1.setText("Back Up DB");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

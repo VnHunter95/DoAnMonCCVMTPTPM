@@ -43,15 +43,9 @@
               </Group>
               <EmptySpace pref="26" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-<<<<<<< HEAD
-                  <Component id="jButton2" max="32767" attributes="0"/>
-                  <Component id="btnQuanly" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jButton6" alignment="0" max="32767" attributes="0"/>
-=======
                   <Component id="btnHoaDonTinhTien" max="32767" attributes="0"/>
                   <Component id="btnQuanLy" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnThoat" alignment="0" max="32767" attributes="0"/>
->>>>>>> master
               </Group>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
           </Group>
@@ -77,13 +71,8 @@
                       </Group>
                       <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-<<<<<<< HEAD
-                          <Component id="btnQuanly" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
-=======
                           <Component id="btnQuanLy" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnDoanhThu" alignment="3" min="-2" max="-2" attributes="0"/>
->>>>>>> master
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -148,20 +137,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDoanhThuActionPerformed"/>
       </Events>
     </Component>
-<<<<<<< HEAD
-    <Component class="javax.swing.JButton" name="btnQuanly">
-=======
     <Component class="javax.swing.JButton" name="btnQuanLy">
->>>>>>> master
       <Properties>
         <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n L&#xfd; "/>
       </Properties>
       <Events>
-<<<<<<< HEAD
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQuanlyActionPerformed"/>
-=======
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQuanLyActionPerformed"/>
->>>>>>> master
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDangXuat">

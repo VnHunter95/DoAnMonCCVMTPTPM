@@ -15,16 +15,10 @@ import javax.swing.JOptionPane;
  * @author Hunter95
  */
 public class frmManHinhChinh extends javax.swing.JFrame {
-<<<<<<< HEAD
+
     
     String userName,CapDo;
-    /**
-     * Creates new form frmManHinhChinh
-     */
-=======
-
    static int quyen=0;
->>>>>>> master
     public frmManHinhChinh(String userName, String CapDo) {
         initComponents();
         this.userName=userName;
@@ -59,21 +53,12 @@ public class frmManHinhChinh extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         edtUsername = new javax.swing.JLabel();
         edtQuyen = new javax.swing.JLabel();
-<<<<<<< HEAD
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        btnQuanly = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-=======
         btnMenu = new javax.swing.JButton();
         btnHoaDonTinhTien = new javax.swing.JButton();
         btnDoanhThu = new javax.swing.JButton();
         btnQuanLy = new javax.swing.JButton();
         btnDangXuat = new javax.swing.JButton();
         btnThoat = new javax.swing.JButton();
->>>>>>> master
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -106,18 +91,10 @@ public class frmManHinhChinh extends javax.swing.JFrame {
                 btnDoanhThuActionPerformed(evt);
             }
         });
-
-<<<<<<< HEAD
-        btnQuanly.setText("Quản Lý ");
-        btnQuanly.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuanlyActionPerformed(evt);
-=======
         btnQuanLy.setText("Quản Lý ");
         btnQuanLy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnQuanLyActionPerformed(evt);
->>>>>>> master
             }
         });
 
@@ -161,15 +138,9 @@ public class frmManHinhChinh extends javax.swing.JFrame {
                         .addComponent(btnMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-<<<<<<< HEAD
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnQuanly, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-=======
                     .addComponent(btnHoaDonTinhTien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnQuanLy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnThoat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
->>>>>>> master
                 .addGap(20, 20, 20))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -190,13 +161,8 @@ public class frmManHinhChinh extends javax.swing.JFrame {
                             .addComponent(btnHoaDonTinhTien))
                         .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-<<<<<<< HEAD
-                            .addComponent(btnQuanly)
-                            .addComponent(jButton3))
-=======
                             .addComponent(btnQuanLy)
                             .addComponent(btnDoanhThu))
->>>>>>> master
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnDangXuat)
@@ -302,16 +268,7 @@ public class frmManHinhChinh extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-<<<<<<< HEAD
-    private javax.swing.JButton btnQuanly;
-    private javax.swing.JLabel edtQuyen;
-    private javax.swing.JLabel edtUsername;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-=======
+
     private javax.swing.JButton btnDangXuat;
     private javax.swing.JButton btnDoanhThu;
     private javax.swing.JButton btnHoaDonTinhTien;
@@ -320,7 +277,6 @@ public class frmManHinhChinh extends javax.swing.JFrame {
     private javax.swing.JButton btnThoat;
     private javax.swing.JLabel edtQuyen;
     private javax.swing.JLabel edtUsername;
->>>>>>> master
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
