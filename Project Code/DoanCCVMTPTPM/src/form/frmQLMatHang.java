@@ -19,6 +19,7 @@ import myclass.MatHang;
  */
 public class frmQLMatHang extends javax.swing.JFrame {
  private final  MatHang mh = new MatHang();
+ 
  private boolean cothem=true;
  private final DefaultTableModel tableModel = new DefaultTableModel();
     public void ShowData() throws SQLException {
