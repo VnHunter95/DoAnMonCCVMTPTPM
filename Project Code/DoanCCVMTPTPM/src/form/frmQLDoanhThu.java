@@ -258,7 +258,7 @@ public class frmQLDoanhThu extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,8 +307,19 @@ public class frmQLDoanhThu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_xoaActionPerformed
 
     private void jButton_inActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_inActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Vui lòng kết nối với máy in");
+        if(jTable_hoadon.getSelectedRowCount()<=0)
+        {
+            
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn cần in");
+        }else
+        {
+            try {
+                int id = Integer.valueOf(jTable_hoadon.getValueAt(jTable_hoadon.getSelectedRow(), 0).toString());
+                hd.printInVoice(id);
+            } catch (SQLException ex) {
+                Logger.getLogger(frmQLDoanhThu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jButton_inActionPerformed
     public final void ShowData_DoanhThuNgay() throws SQLException {         
         ResultSet result=null;  
