@@ -53,9 +53,14 @@ public class TaiKhoan {
     }
     //Tự code InsertMatHang
 
-    public void InsertTaiKhoan() throws SQLException {
+    public void InsertTaiKhoan(String tk,String pa,Boolean ad) throws SQLException {
         cn.connectSQL();
-        String sql = "INSERT INTO TaiKhoan Values()";
+        String sql = "INSERT INTO TaiKhoan Values('"+tk+"','"+pa+"','"+ad.toString()+"')";
         cn.UpdateData(sql);
     }
+    public void EditTaiKhoan(String tk,String pa,Boolean ad) throws SQLException{
+         cn.connectSQL();
+         String sql ="Update TaiKhoan set Username ='"+tk+"',Password='"+pa+"',CapDo='"+ad+"' ";
+         cn.UpdateData(sql);
+     }
 }
