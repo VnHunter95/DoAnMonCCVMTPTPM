@@ -27,14 +27,15 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
      */
     ResultSet result = null;
     private final TaiKhoan TK = new TaiKhoan();
-    private boolean isInsert = false;
+    
     private boolean isEdit = false;
-    private boolean isDelete = false;
+    
     public void QLAccount() throws SQLException{
         String []colsName = {"Tên tài khoản","Password","Là Admin"};
         tableModel.setColumnIdentifiers(colsName);
         tbvAccount.setModel(tableModel);
         updateData(TK.LoadAllTaiKhoanata());
+        
     }
     public void updateData(ResultSet result){
         try {
@@ -53,6 +54,34 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
        }
+    }
+    public void LoadData(){
+         try {
+             ResultSet result = TK.LoadAllTaiKhoanata();
+            while(result.next()){ // nếu còn đọc tiếp được một dòng dữ liệu
+                String rows[] = new String[3];
+                rows[0] = result.getString(1); // lấy dữ liệu tại cột số 1 (ứng với mã sp)
+                rows[1] = result.getString(2);
+                //rows[2] = 
+                if (result.getBoolean(3)){
+                    rows[2]= "admin";               
+                }
+                else{rows[2]= "user"; }
+                tableModel.addRow(rows);
+                //tableModel.setValueAt(result.getBoolean(3), tableModel.getRowCount()-1, 3);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+       }
+         setupText(true);
+         setupButton(true);
+    }
+    public void ClearData() throws SQLException {
+        //Lay chi so dong cuoi cung
+        int n = tableModel.getRowCount() - 1;
+        for (int i = n; i >= 0; i--) {
+            tableModel.removeRow(i);//Remove tung dong
+        }
     }
     public boolean isContainSpecialCharacter(String s) {
      Pattern p = Pattern.compile("[^A-Za-z0-9]");
@@ -73,6 +102,8 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
     public frmQLTaiKhoan() throws SQLException {
         initComponents();
         QLAccount();
+        setupText(false);
+        setupButton(true);
     }
 
     /**
@@ -157,8 +188,18 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
         });
 
         btnEdit.setText("Sửa");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnClear.setText("Xóa");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnExit.setText("Thoát");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -298,6 +339,7 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
         txtAccount.setText("");
         txtPass.setText("");
         cbxAdmin.setSelected(false);
+        txtAccount.requestFocus();
     }
     public void setupButton(boolean c){
         //btnNonSave.isVisible() = true;
@@ -308,45 +350,101 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
         btnSave.setEnabled(!c);
         btnNonSave.setEnabled(!c);
     }
+    public void setupText(boolean c){
+        txtAccount.setEditable(c);
+        txtPass.setEditable(c);
+        //cbxAdmin.isEnabled();
+        cbxAdmin.setEnabled(c);
+    }
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         setupButton(false);
-        
+        setup();
+        isEdit = false;
+        setupText(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         String acc = txtAccount.getText();
         String pass = txtPass.getText();
-        if (isContainSpecialCharacter(pass)){
-            JOptionPane.showConfirmDialog(null, "Bạn nhập lại password đi?", "Thông báo", JOptionPane.YES_NO_OPTION);
-            setup();
-        }
-        if (isContainSpecialCharacter(acc)){
-            JOptionPane.showConfirmDialog(null, "Bạn nhập lại tên tài khoản đi?", "Thông báo", JOptionPane.YES_NO_OPTION);
-            setup();
+        if(pass.length() == 0|| acc.length()==0){
+            JOptionPane.showConfirmDialog(null, "Bạn nhập đầy đủ thông tin đi", "Sai định dạng password", JOptionPane.OK_OPTION);
         }
         else{
-            
-            if(isInsert){
+        
+            if (isContainSpecialCharacter(pass) || pass.length() > 15){
+                JOptionPane.showConfirmDialog(null, "Bạn nhập lại password đi?", "Sai định dạng password", JOptionPane.OK_OPTION);
+                setup();
+            }
+            if (isContainSpecialCharacter(acc) || acc.length() > 15){
+                JOptionPane.showConfirmDialog(null, "Bạn nhập lại tên tài khoản đi?", "Sai định dạng Tên Tài Khoản", JOptionPane.OK_OPTION);
+                setup();
+            }
+            else{
+                if(!isEdit){
+                    try {
+                        TK.InsertTaiKhoan(acc, pass, cbxAdmin.isSelected());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(frmQLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }else{
+                    try {
+                        TK.EditTaiKhoan(acc, pass,cbxAdmin.isSelected());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(frmQLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 try {
-                    TK.InsertTaiKhoan(acc, pass, cbxAdmin.isSelected());
+                    ClearData(); //goi ham xoa du lieu tron tableModel
                 } catch (SQLException ex) {
                     Logger.getLogger(frmQLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            if(isEdit){
-            
-            }
-            if(isDelete){
-
+                LoadData();
             }
         }
+        setup();
+        setupText(false);
+        setupButton(true);
         
-            
-        
-        
-        
-            
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        String s = txtAccount.getText();
+        String x = txtPass.getText();
+        if (s == ""){
+            JOptionPane.showConfirmDialog(null, "Bạn chọn tên tài khoản đi?", "Thông báo", JOptionPane.OK_OPTION);
+        }
+        if (x == ""){
+            JOptionPane.showConfirmDialog(null, "Bạn nhập Password đi?", "Thông báo", JOptionPane.OK_OPTION);
+        }else{
+            setupButton(false);
+            isEdit = true;
+            setupText(false);
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        String s = txtAccount.getText();
+        if (s != ""){
+            try {
+                TK.DeleteTaiKhoanByUsername(s);
+            } catch (SQLException ex) {
+                Logger.getLogger(frmQLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                ClearData();
+            } catch (SQLException ex) {
+                Logger.getLogger(frmQLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            LoadData();
+            setup();
+            setupText(false);
+            setupButton(true);
+        }else{
+            JOptionPane.showConfirmDialog(null, "Bạn chọn tài khoản để xóa đi?", "Thông báo", JOptionPane.OK_OPTION);
+        }
+    }//GEN-LAST:event_btnClearActionPerformed
 
     /**
      * @param args the command line arguments
