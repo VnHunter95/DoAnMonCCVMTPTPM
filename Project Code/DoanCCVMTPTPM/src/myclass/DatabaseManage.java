@@ -5,8 +5,12 @@
  */
 package myclass;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -14,37 +18,41 @@ import java.sql.SQLException;
  */
 public class DatabaseManage {
     public Connect cn = new Connect();
-     public void BackUp() throws SQLException{   
-         try{
+    
+    private String showSaveFileDialog(JFrame frame) {
+		JFileChooser fileChooser = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("BAK FILE", "bak", "text");
+                fileChooser.setFileFilter(filter);
+		fileChooser.setDialogTitle("Specify a file to save");
+
+		int userSelection = fileChooser.showSaveDialog(frame);
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+			File fileToSave = fileChooser.getSelectedFile();
+			System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+                        return fileToSave.getAbsolutePath();
+		}
+                return "C:\\";
+	}
+    
+     public void BackUp(JFrame frame) throws SQLException{   
+                try{
              cn.connectSQL();
-         String sql = "USE QLNH \n"
-                 + "BACKUP DATABASE QLNH TO DISK = 'C:\\Users\\HOME\\Desktop\\New folder (3)\\DoAnMonCCVMTPTPM\\Backup\\DB.Bak'WITH FORMAT,MEDIANAME = 'QLNH',NAME = 'Full Backup of QLNH'";
-        cn.UpdateData(sql);
+                JFileChooser fileChooser = new JFileChooser();
+                   FileNameExtensionFilter filter = new FileNameExtensionFilter("BAK FILE", "bak", "text");
+                   fileChooser.setFileFilter(filter);
+                   fileChooser.setDialogTitle("Specify a file to save");
+
+                   int userSelection = fileChooser.showSaveDialog(frame);
+                   if (userSelection == JFileChooser.APPROVE_OPTION) {
+                           File fileToSave = fileChooser.getSelectedFile();
+                           System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+                            String sql = "USE QLNH \n"
+                    + "BACKUP DATABASE QLNH TO DISK = '"+fileToSave.getAbsolutePath()+".bak' WITH FORMAT,MEDIANAME = 'QLNH',NAME = 'Full Backup of QLNH'";
+                   cn.UpdateData(sql);
+            }
          }
          catch(SQLException e){
              
          }
      }
-     public void Restore() throws SQLException{
-         try{
-             cn.connectSQL();
-         String sql ="USE master \n" +
-            "RESTORE DATABASE QLNH FROM DISK='C:\\Users\\HOME\\Desktop\\New folder (3)\\DoAnMonCCVMTPTPM\\Backup\\DB.Bak'\n" +
-            "WITH \n" +
-            "   MOVE 'QLNH' TO 'C:\\Users\\HOME\\Desktop\\New folder (3)\\DoAnMonCCVMTPTPM\\Backup\\QLNH.mdf',\n" +
-            "   MOVE 'QLNH_log' TO 'C:\\Users\\HOME\\Desktop\\New folder (3)\\DoAnMonCCVMTPTPM\\Backup\\QLNH_log.ldf'";  
-         cn.UpdateData(sql);   
-         }
-         catch(SQLException e){
-             
-         }      
-     }
-     public void Restore(String filename) throws SQLException //khôi phục database
-        {
-            cn.connectSQL();
-            String query = "USE master; ALTER DATABASE QLNH SET SINGLE_USER WITH ROLLBACK IMMEDIATE;" +
-                    "RESTORE DATABASE QLNH" +
-                   " FROM DISK ='" + filename + "' WITH REPLACE; ";
-            cn.UpdateData(query);
-        }
 }
