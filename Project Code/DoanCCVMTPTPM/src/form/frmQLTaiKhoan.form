@@ -279,6 +279,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Kh&#xf4;ng L&#x1b0;u"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNonSaveActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -58,9 +58,9 @@ public class TaiKhoan {
         String sql = "INSERT INTO TaiKhoan Values('"+tk+"','"+pa+"','"+ad.toString()+"')";
         cn.UpdateData(sql);
     }
-    public void EditTaiKhoan(String tk,String pa,Boolean ad) throws SQLException{
+    public void EditTaiKhoan(String oldTk,String tk,String pa,Boolean ad) throws SQLException{
          cn.connectSQL();
-         String sql ="Update TaiKhoan set Username ='"+tk+"',Password='"+pa+"',CapDo='"+ad+"' ";
+         String sql ="Update TaiKhoan set Username ='"+tk+"',Password='"+pa+"',CapDo='"+ad+"' where Username like '"+oldTk+"'";
          cn.UpdateData(sql);
      }
 }

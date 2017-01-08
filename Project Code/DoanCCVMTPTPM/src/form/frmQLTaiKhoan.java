@@ -216,6 +216,11 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
         });
 
         btnNonSave.setText("Không Lưu");
+        btnNonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNonSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -388,7 +393,7 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
                     }
                 }else{
                     try {
-                        TK.EditTaiKhoan(acc, pass,cbxAdmin.isSelected());
+                        TK.EditTaiKhoan(tbvAccount.getValueAt(tbvAccount.getSelectedRow(),0).toString(),acc, pass,cbxAdmin.isSelected());
                     } catch (SQLException ex) {
                         Logger.getLogger(frmQLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -399,11 +404,12 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
                     Logger.getLogger(frmQLTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 LoadData();
+                setup();
+                setupText(false);
+                setupButton(true);
             }
         }
-        setup();
-        setupText(false);
-        setupButton(true);
+        
         
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -419,7 +425,7 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
         }else{
             setupButton(false);
             isEdit = true;
-            setupText(false);
+            setupText(true);
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
@@ -445,6 +451,12 @@ public class frmQLTaiKhoan extends javax.swing.JFrame {
             JOptionPane.showConfirmDialog(null, "Bạn chọn tài khoản để xóa đi?", "Thông báo", JOptionPane.OK_OPTION);
         }
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnNonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNonSaveActionPerformed
+            setup();
+            setupText(false);
+            setupButton(true);
+    }//GEN-LAST:event_btnNonSaveActionPerformed
 
     /**
      * @param args the command line arguments
