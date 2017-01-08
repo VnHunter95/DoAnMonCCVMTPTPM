@@ -392,10 +392,10 @@ public class frmQLMatHang extends javax.swing.JFrame {
         } else {
             if (ml.length() > 6 || tl.length() > 30) {
                 JOptionPane.showMessageDialog(null,"Ma loai chi 6 ky tu, ten loai la 30", "Thong bao", 1);
-            } else if (b == true || b1 == true||b2==true||b3==true) {
-                JOptionPane.showMessageDialog(null, "Tài khoản và mật khẩu có chứa ký tự đặc biệt","Thông báo", 1);
+            } //else if (b == true || b1 == true||b2==true||b3==true) {
+                //JOptionPane.showMessageDialog(null, "Có chứa ký tự đặc biệt","Thông báo", 1);
                 
-            }
+            //}
             
             else {
                 try {
@@ -405,15 +405,15 @@ public class frmQLMatHang extends javax.swing.JFrame {
                         
                     } else //Luu cho sua
                     {
-                        mh.EditMatHang( tl,dg,l);
+                        mh.EditMatHang(ml,tl,dg,l);
                     }
                     ClearData(); //goi ham xoa du lieu tron tableModel
                     ShowData(); //Do lai du lieu vao Table Model
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Cap nhat that bai", "Thong bao", 1);
                 }
-                setKhoa(false);
-                setButton(false);
+                setKhoa(true);
+                setButton(true);
             }
         }
 
@@ -422,8 +422,8 @@ public class frmQLMatHang extends javax.swing.JFrame {
     private void jButtonKoLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKoLuuActionPerformed
         // TODO add your handling code here:
         setNull();
-        setKhoa(false);
-        setButton(false);
+        setKhoa(true);
+        setButton(true);
     }//GEN-LAST:event_jButtonKoLuuActionPerformed
 
     private void jTextFieldIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIDActionPerformed

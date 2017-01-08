@@ -35,9 +35,9 @@ public class MatHang {
          String sql = "INSERT INTO MatHang Values('"+id+"','"+mh+"',"+dg+",'"+loai+"')";                   
          cn.UpdateData(sql);         
      }  
-     public void EditMatHang(String mh,String dg,String loai) throws SQLException{
+     public void EditMatHang(String ml , String mh,String dg,String loai) throws SQLException{
          cn.connectSQL();
-         String sql ="Update MatHang set TenMH ='"+mh+"',DonGia="+dg+",Loai='"+loai+"' ";
+         String sql ="Update MatHang set TenMH ='"+mh+"',DonGia="+dg+",Loai='"+loai+"' where IdMh like '"+ml+"'";
          cn.UpdateData(sql);
      }
 }
